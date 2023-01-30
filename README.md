@@ -1,10 +1,63 @@
-# My Personal Project
+# Blackjack Game
 
-## A subtitle
+## Introduction / Rules
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
+Blackjack is one of the most popular games at casinos.
+The objective of the game is to beat the dealer / house. 
+Every player is dealt 2 cards at the beginning of the game
+and takes turns to "hit" (ask for another card), stand
+(keep his current hand as it is), double (hit and double
+the current hand stake), or split (create 2 hands from a pair).
+The dealer also has a hand which follows a strict set of rules.
+The dealer must hit until their hand value reaches 17 or higher
+at which point they stand. f the dealer has a soft 17 
+(a hand value of 17 including an Ace counted as 11), 
+they must hit.If a player's hand exceeds 21, they lose the round, 
+even if the dealer also busts. If both the player and dealer 
+have the same hand value, the round is a push (tie) and the
+player's bet is returned. The dealer only reveals one of their cards at
+the start of the round, with the second card revealed only after all
+players have completed their turns.
 
-An example of text with **bold** and *italic* fonts.  
+## Reasons I Am Making This Project
+
+### What will the application do?
+
+This program will replicate a game of blackjack as if you
+were sitting at a real blackjack table at a casino. It will
+have all the proper rules and functionality that you would expect
+this program to have.
+
+### Who Will Use The Application
+
+People who want to practice blackjack without real stakes,
+gamble for fun without real stakes, practice card counting,
+or people who want to play blackjack with a friend at their house
+but do not own a playing card set.
+
+### Interest To Me
+
+This is of large interest to me because personally blackjack
+has always been something I wanted to learn how to play super well
+(i.e learning to card count) and this program would help me do that.
+Also I think that being able to just mess around in blackjack without real
+stakes is really nice as I won't actaully turn into a gambling addict and lose
+real money.
+
+## User Stories
+
+- As a user, I want to be able to add more balance to my list of players.
+
+- As a user, I want to be able to add more hands to the table.
+
+- As a user, I want to be able to see a leaderboard with who has the most money at the table.
+
+- As a user, I want to be able to save my progress and load it again.
+
+## How To Play
+
+First launch the game with the run button located at the top, 
+Specify how many players are playing and the starting balance for everyone.
+Each player then specifies how many hands they will be playing. The game
+then proceeds as a regular blackjack game with each player specifying to hit, stand, double, or split
+for each of their hands. This continues until all players run out of money, or you close the game.
