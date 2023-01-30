@@ -44,6 +44,14 @@ Also I think that being able to just mess around in blackjack without real
 stakes is really nice as I won't actaully turn into a gambling addict and lose
 real money.
 
+## How To Play
+
+First launch the game with the run button located at the top, 
+Specify how many players are playing and the starting balance for everyone.
+Each player then specifies how many hands they will be playing. The game
+then proceeds as a regular blackjack game with each player specifying to hit, stand, double, or split
+for each of their hands. This continues until all players run out of money, or you close the game.
+
 ## User Stories
 
 - As a user, I want to be able to add more balance to my list of players.
@@ -53,11 +61,3 @@ real money.
 - As a user, I want to be able to see a leaderboard with who has the most money at the table.
 
 - As a user, I want to be able to save my progress and load it again.
-
-## How To Play
-
-First launch the game with the run button located at the top, 
-Specify how many players are playing and the starting balance for everyone.
-Each player then specifies how many hands they will be playing. The game
-then proceeds as a regular blackjack game with each player specifying to hit, stand, double, or split
-for each of their hands. This continues until all players run out of money, or you close the game.
