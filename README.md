@@ -6,8 +6,10 @@ Blackjack is one of the most popular games at casinos.
 The objective of the game is to beat the dealer / house. 
 Every player is dealt 2 cards at the beginning of the game
 and takes turns to "hit" (ask for another card), stand
-(keep his current hand as it is), double (hit and double
-the current hand stake), or split (create 2 hands from a pair).
+(keep his current hand as it is), or double (hit and double
+the current hand stake). There is another action you can do which 
+is split (create 2 hands from a pair) but that seems a bit too advanced
+for now, maybe I will impliment it later in the project.
 The dealer also has a hand which follows a strict set of rules.
 The dealer must hit until their hand value reaches 17 or higher
 at which point they stand. f the dealer has a soft 17 
@@ -24,9 +26,9 @@ players have completed their turns.
 ### What will the application do?
 
 This program will replicate a game of blackjack as if you
-were sitting at a real blackjack table at a casino. It will
-have all the proper rules and functionality that you would expect
-this program to have.
+were sitting at a real blackjack table at a casino (minus the ability
+to split your hand). It will  have all the proper rules and 
+functionality that you would expect this program to have.
 
 ### Who Will Use The Application
 
@@ -56,8 +58,9 @@ for each of their hands. This continues until all players run out of money, or y
 
 - As a user, I want to be able to add more balance to my list of players.
 
-- As a user, I want to be able to add more hands to the table.
+- As a user, I want to be able to add a card to my list of players.
 
-- As a user, I want to be able to see a leaderboard with who has the most money at the table.
+- As a user, I want to be able to add a player to my list of players.
 
-- As a user, I want to be able to save my progress and load it again.
+- As a user, I want to be able to view a scoreboard of my list of players.
+
