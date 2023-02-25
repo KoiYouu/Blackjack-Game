@@ -43,16 +43,15 @@ This is of large interest to me because personally blackjack
 has always been something I wanted to learn how to play super well
 (i.e learning to card count) and this program would help me do that.
 Also I think that being able to just mess around in blackjack without real
-stakes is really nice as I won't actaully turn into a gambling addict and lose
+stakes is really nice as I won't actually turn into a gambling addict and lose
 real money.
 
 ## How To Play
 
 First launch the game with the run button located at the top, 
-Specify how many players are playing and the starting balance for everyone.
-Each player then specifies how many hands they will be playing. The game
-then proceeds as a regular blackjack game with each player specifying to hit, stand, double, or split
-for each of their hands. This continues until all players run out of money, or you close the game.
+Specify how many players are playing and the starting balance for everyone. The game
+then proceeds as a regular blackjack game with each player specifying to hit, stand, or double
+during their turns. This continues until all players run out of money, or you close the game.
 
 ## User Stories
 
