@@ -38,9 +38,12 @@ public class Cards {
 
     // EFFECTS: return the cards info as a string
     public String getCardInfo() {
-        String info = "Cards Name: " + this.getCardName()
-                + " Cards Suit: " + this.getSuit();
-        return info;
+        if (this.facingUp) {
+            return "[Name: " + this.getCardName()
+                     + " Suit: " + this.getSuit() + " ]";
+        } else {
+            return "[X]";
+        }
     }
 
     public int getValue() {

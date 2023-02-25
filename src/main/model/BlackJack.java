@@ -19,6 +19,15 @@ public class BlackJack {
         return newCard;
     }
 
+    // EFFECTS: adds up all cards in hand and returns their total value
+    public int handValue() {
+        int handValue = 0;
+        for (Cards card : hand) {
+            handValue += card.getValue();
+        }
+        return handValue;
+    }
+
     // MODIFIES: this
     // EFFECTS: clears hand of all cards
     public void clearHand() {
@@ -35,6 +44,13 @@ public class BlackJack {
     public void setStand() {
         stand = true;
     }
+
+    // MODIFIES: This
+    // EFFECTS: Sets the player to not be standing
+    public void setNotStand() {
+        stand = false;
+    }
+
 
     public ArrayList<Cards> getHand() {
         return hand;
