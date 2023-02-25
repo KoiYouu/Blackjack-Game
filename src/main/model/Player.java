@@ -2,15 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
-public class Player {
+public class Player extends BlackJack {
     private int playerID; // unique player id
     private int balance; // players balance
     private int wins; // players wins
     private int draws; // players draws
     private int losses; // players losses
-    private ArrayList<Cards> hand; // players hand with all its cards
     private int bet; // Current bet
-    private boolean stand; // True if player is standing, false if player is not
     private int count = 1;
 
     /*
@@ -19,33 +17,13 @@ public class Player {
      * a bet of $0, makes the player not standing, no wins / losses / draws, and a unique player ID.
      */
     public Player(int startingBalance) {
+        super();
         playerID = count++;
         balance = startingBalance;
         wins = 0;
         draws = 0;
         losses = 0;
-        hand = new ArrayList<>();
         bet = 0;
-        stand = false;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds a new random card to our hand and returns what card we got
-    public Cards hitCard() {
-        Cards newCard = new Cards();
-        hand.add(newCard);
-        return newCard;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: clears hand of all cards
-    public void clearHand() {
-        hand.clear();
-    }
-
-    // returns the info of the card at our given position
-    public String getCards(int index) {
-        return hand.get(index).getCardInfo();
     }
 
     // MODIFIES: this
@@ -88,12 +66,6 @@ public class Player {
         this.bet = bet;
     }
 
-    // MODIFIES: This
-    // EFFECTS: Sets the player to be standing
-    public void setStand() {
-        stand = true;
-    }
-
     public int getPlayerID() {
         return playerID;
     }
@@ -118,11 +90,4 @@ public class Player {
         return bet;
     }
 
-    public ArrayList<Cards> getHand() {
-        return hand;
-    }
-
-    public boolean isStand() {
-        return stand;
-    }
 }

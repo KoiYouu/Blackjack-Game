@@ -30,6 +30,12 @@ public class Cards {
         facingUp = false;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets card to be face up
+    public void setCardFaceUp() {
+        facingUp = true;
+    }
+
     // EFFECTS: return the cards info as a string
     public String getCardInfo() {
         String info = "Cards Name: " + this.getCardName()
