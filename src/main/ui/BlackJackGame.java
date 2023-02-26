@@ -19,7 +19,7 @@ public class BlackJackGame {
         this.startGame();
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, player, listofplayers, dealer
     // EFFECTS: Starts up the game of blackjack, creates as many players as the user specifies with each
     // player getting the specified balance. Displays the menu options to quit or play, if neither option is chosen
     // a message will appear telling the user to pick a given option. if quit is selected game exits, if play is
@@ -36,6 +36,7 @@ public class BlackJackGame {
                 getBets();
                 playGame();
                 payOut();
+                resetEveryone();
             } else if (input.equals("b")) {
                 addBalanceToPlayer();
             } else if (input.equals("n")) {
@@ -49,6 +50,12 @@ public class BlackJackGame {
         System.out.println("See you next time!");
     }
 
+    public void resetEveryone() {
+        dealer.clearHand();
+        dealer.setNotStand();
+    }
+
+    // EFFECTS: prints out a scoreboard of every players wins losses draws and balance
     public void viewScoreBoard() {
         System.out.println("");
         for (Player player: listOfPlayers.getPlayers()) {
@@ -59,6 +66,9 @@ public class BlackJackGame {
         System.out.println("");
     }
 
+    // REQUIRES: startingBalance > 0
+    // MODIFIES: this, listOfPlayers, player
+    // EFFECTS: creates a player with the specified starting balance and adds it to the end of listofplayers
     public void addPlayer() {
         System.out.println("Please specify the starting balance of the new player");
         int input = 0;
@@ -76,6 +86,9 @@ public class BlackJackGame {
 
     }
 
+    // REQUIRES: moneyToAdd > 0 and input for player index to be >= 1 and <= listOfPlayers.getPlayers().size()
+    // MODIFIES: this, player
+    // EFFECTS: adds specified money to the specified player
     public void addBalanceToPlayer() {
         System.out.println("Please specify which player to add money to from [1-" + listOfPlayers.getPlayers().size()
                 + "]");
@@ -122,33 +135,37 @@ public class BlackJackGame {
         }
     }
 
+    // MODIFIES: this
+    //
     public void playGame() {
         beginRound();
         for (Player player: listOfPlayers.getPlayers()) {
             playersTurn(player);
-
         }
+        System.out.println("Dealers turn!");
+        dealer.dealersTurn();
+        System.out.println("Dealers Cards: " + dealer.getDealersCards());
         System.out.println("Finished that round!");
     }
 
     public void payOut() {
-        System.out.println("Now to recap who won and lost with their respective payouts!");
-        System.out.println("");
+        System.out.println("Now to recap who won and lost with their respective payouts! \n");
         for (Player player: listOfPlayers.getPlayers()) {
-            if (player.handValue() <= 21 && player.handValue() > dealer.handValue()) {
+            if (player.handValue() <= 21 && dealer.handValue() > 21) {
                 System.out.println("Player " + player.getPlayerID() + " wins!");
-                System.out.println("They earned a total of $" + player.getBet());
-                System.out.println("");
+                System.out.println("They earned a total of $" + player.getBet() + "\n");
+                player.playerWin();
+            } else if (player.handValue() <= 21 && player.handValue() > dealer.handValue()) {
+                System.out.println("Player " + player.getPlayerID() + " wins!");
+                System.out.println("They earned a total of $" + player.getBet() + "\n");
                 player.playerWin();
             } else if (player.handValue() <= 21 && player.handValue() == dealer.handValue()) {
                 System.out.println("Player " + player.getPlayerID() + " pushes!");
-                System.out.println("They managed to keep their $" + player.getBet());
-                System.out.println("");
+                System.out.println("They managed to keep their $" + player.getBet() + "\n");
                 player.playerPush();
             } else {
                 System.out.println("Player " + player.getPlayerID() + " loses!");
-                System.out.println("They lost a total of $" + player.getBet());
-                System.out.println("");
+                System.out.println("They lost a total of $" + player.getBet() + "\n");
                 player.playerLoss();
             }
         }
@@ -209,6 +226,7 @@ public class BlackJackGame {
         player.setStand();
         System.out.println("Stand!");
         System.out.println("Cards: " + player.getAllCards());
+        System.out.println("");
     }
 
     // REQUIRES: numPlayers >= 1, startingMoney >= 1

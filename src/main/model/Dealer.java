@@ -34,7 +34,7 @@ public class Dealer extends BlackJack {
     public String getDealersCards() {
         String dealersCards = "";
         for (Cards card: this.hand) {
-            dealersCards += " " + card.getCardInfo();
+            dealersCards = dealersCards + " " + card.getCardInfo();
         }
         return dealersCards;
     }

@@ -88,29 +88,35 @@ public class Player extends BlackJack {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds double the players bet to their balance, resets their bet to 0, adds a win, and clears their hand
+    // EFFECTS: adds double the players bet to their balance, resets their bet to 0, adds a win, clears their hand,
+    // and sets them to not stand
     public void playerWin() {
         this.balance += this.bet * 2;
         this.bet = 0;
         this.addWin();
         this.hand.clear();
+        this.setNotStand();
     }
 
     // MODIFIES: this
-    // EFFECTS: returns the players bet, resets their bet to 0, adds a draw, and clears their hand
+    // EFFECTS: returns the players bet, resets their bet to 0, adds a draw, clears their hand,
+    // and sets them to not stand
     public void playerPush() {
         this.balance += this.bet;
         this.bet = 0;
         this.addDraw();
         this.hand.clear();
+        this.setNotStand();
     }
 
     // MODIFIES: this
-    // EFFECT: player does not get their bet back, resets their bet to 0, adds a loss, and clears their hand
+    // EFFECT: player does not get their bet back, resets their bet to 0, adds a loss, clears their hand,
+    // and sets them to not stand
     public void playerLoss() {
         this.bet = 0;
         this.addLoss();
         this.hand.clear();
+        this.setNotStand();
     }
 
     public int getPlayerID() {

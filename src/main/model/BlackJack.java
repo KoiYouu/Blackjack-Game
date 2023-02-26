@@ -6,6 +6,7 @@ public class BlackJack {
     protected ArrayList<Cards> hand; // players hand with all its cards
     protected boolean stand; // True if player is standing, false if player is not
 
+    // EFFECT: Super constructor for dealer and player with an empty hand of cards and not standing
     public BlackJack() {
         hand = new ArrayList<>();
         stand = false;
