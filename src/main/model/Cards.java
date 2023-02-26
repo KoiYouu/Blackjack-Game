@@ -69,6 +69,14 @@ public class Cards {
         return randNum;
     }
 
+    public void setSpecificCard(int index) {
+        cardName = deck[index];
+        value = values[index];
+        suit = "S";
+        facingUp = true;
+    }
+
+
     // REQUIRES: Index to be from 0-12
     // EFFECTS: Returns the name of the card with the given index
     public static String getDeck(int index) {

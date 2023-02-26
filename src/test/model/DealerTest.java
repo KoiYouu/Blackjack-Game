@@ -41,6 +41,29 @@ public class DealerTest extends BlackJackTest {
     }
 
     @Test
+    void testDealersTurnTotalSumLessThen16() {
+        dealer.hitCard();
+        dealer.hitCard();
+        dealer.hand.get(0).setSpecificCard(0);
+        dealer.hand.get(1).setSpecificCard(0);
+        dealer.dealersTurn();
+        assertTrue(dealer.handValue() >= 16);
+        assertTrue(dealer.hand.size() >= 4);
+    }
+
+    @Test
+    void testDealerTurnTotalSumMoreThen16() {
+        dealer.hitCard();
+        dealer.hitCard();
+        dealer.hand.get(0).setSpecificCard(9);
+        dealer.hand.get(1).setSpecificCard(9);
+        dealer.dealersTurn();
+        assertTrue(dealer.handValue() >= 16);
+        assertEquals(20, dealer.handValue());
+        assertEquals(2, dealer.hand.size());
+    }
+
+    @Test
     void testGetDealersCardsAFaceDownCard() {
         dealer.startingDealerTurn();
         int randNum = dealer.getHand().get(0).getRandNum();

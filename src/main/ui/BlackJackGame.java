@@ -19,7 +19,7 @@ public class BlackJackGame {
         this.startGame();
     }
 
-    // MODIFIES: this, player, listofplayers, dealer
+    // MODIFIES: this, player, dealer
     // EFFECTS: Starts up the game of blackjack, creates as many players as the user specifies with each
     // player getting the specified balance. Displays the menu options to quit or play, if neither option is chosen
     // a message will appear telling the user to pick a given option. if quit is selected game exits, if play is
@@ -50,6 +50,8 @@ public class BlackJackGame {
         System.out.println("See you next time!");
     }
 
+    // MODIFIES: dealer
+    // EFFECTS: clears dealers hand and makes him not stand
     public void resetEveryone() {
         dealer.clearHand();
         dealer.setNotStand();
@@ -135,8 +137,9 @@ public class BlackJackGame {
         }
     }
 
-    // MODIFIES: this
-    //
+    // MODIFIES: this, dealer, player
+    // EFFECTS: Plays out a single round of blackjack asking for every players actions,
+    // and then finially finishing it off with the dealers turn
     public void playGame() {
         beginRound();
         for (Player player: listOfPlayers.getPlayers()) {
@@ -148,6 +151,9 @@ public class BlackJackGame {
         System.out.println("Finished that round!");
     }
 
+    // MODIFIES: player
+    // EFFECTS: pays out the player if they won according to regular blackjack rules,
+    // or does nothing if player did not win, returns players bet if they pushed
     public void payOut() {
         System.out.println("Now to recap who won and lost with their respective payouts! \n");
         for (Player player: listOfPlayers.getPlayers()) {
@@ -171,6 +177,11 @@ public class BlackJackGame {
         }
     }
 
+    // REQUIRES: non-null player object, double to be inputted only if player has enough money
+    // MODIFIES: player
+    // EFFECTS: gets the players input for what to do during their turn and acts accordingly,
+    // h for hit, s for stand, d for double, stops allowing user to interact once card total reaches > 21
+    // or they stand.
     public void playersTurn(Player player) {
         System.out.println("Player " + player.getPlayerID() + "\'s turn:");
         System.out.println("Dealers cards: " + dealer.getDealersCards());
@@ -192,6 +203,7 @@ public class BlackJackGame {
         }
     }
 
+    // REQUIRES: non-null player object
     // MODIFIES: player
     // EFFECT: gives player another card and displays all the players current cards
     // gives a message if the hit busts the player
@@ -205,6 +217,7 @@ public class BlackJackGame {
         System.out.println("");
     }
 
+    // REQUIRES: non-null player object
     // MODIFIES: player
     // EFFECT: gives player another card, doubles their bet,
     // and displays all the players current cards
@@ -219,7 +232,7 @@ public class BlackJackGame {
         System.out.println("");
     }
 
-
+    // REQUIRES: non-null player object
     // MODIFIES: player
     // EFFECT: changes the player to be standing and shows all their cards
     public void playerStand(Player player) {

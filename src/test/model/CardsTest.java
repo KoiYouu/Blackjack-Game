@@ -52,5 +52,14 @@ class CardsTest {
         assertEquals("[X]", card2.getCardInfo());
     }
 
+    @Test
+    void testSetSpecificCard() {
+        card1.setSpecificCard(0);
+        assertTrue(card1.getFacingUp());
+        assertEquals("S", card1.getSuit());
+        assertEquals(2, card1.getValue());
+        assertEquals("2", card1.getCardName());
+    }
+
 
 }
