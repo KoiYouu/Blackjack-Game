@@ -34,7 +34,8 @@ public class BlackJack {
         hand.clear();
     }
 
-    // returns the info of the card at our given position
+    // REQUIRES index to be >=0 and < hand.size()
+    // EFFECTS: returns the info of the card at our given position
     public String getCards(int index) {
         return hand.get(index).getCardInfo();
     }

@@ -3,13 +3,15 @@ package model;
 import java.util.ArrayList;
 
 public class Dealer extends BlackJack {
+
+    // EFFECTS: Creates a dealer with an empty hand and is not standing
     public Dealer() {
         super();
     }
 
     // MODIFIES: this
     // EFFECTS: adds 2 starting cards to the dealers hands
-    // and sets the 2nd one face down, then returns the cards
+    // and sets the 2nd one face down, then returns the cards as a string
     public String startingDealerTurn() {
         hitCard();
         hitCard();

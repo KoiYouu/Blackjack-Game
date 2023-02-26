@@ -14,11 +14,16 @@ public class BlackJackGame {
     private boolean gameOver = false;
 
 
-
+    // EFFECTS: Creates a game of blackjack
     public BlackJackGame() {
         this.startGame();
     }
 
+    // MODIFIES: this
+    // EFFECTS: Starts up the game of blackjack, creates as many players as the user specifies with each
+    // player getting the specified balance. Displays the menu options to quit or play, if neither option is chosen
+    // a message will appear telling the user to pick a given option. if quit is selected game exits, if play is
+    // selected the game starts, with bets being collected and the game playing out.
     public void startGame() {
         preGameSetUp();
 
@@ -30,7 +35,9 @@ public class BlackJackGame {
             if (input.equals("q")) {
                 gameOver = true;
             } else if (input.equals("p")) {
+                getBets();
                 playGame();
+
             } else {
                 System.out.println("Please choose from given options.");
             }
@@ -39,18 +46,41 @@ public class BlackJackGame {
         System.out.println("See you next time!");
     }
 
+    // REQUIRES: bet >= 1 and <= players balance
+    // MODIFIES: player
+    // EFFECT: sets all the players bets and takes away the bet from their balance
+    public void getBets() {
+        for (Player player: listOfPlayers.getPlayers()) {
+            System.out.println("Player " + player.getPlayerID() + " your current balance is: $"
+                    + player.getBalance());
+            System.out.println("How much would you like to bet? [Must range from 1-" + player.getBalance()
+                    + "]");
+            int bet = userInput.nextInt();
+            player.setBet(bet);
+        }
+    }
+
     public void playGame() {
         beginRound();
         for (Player player: listOfPlayers.getPlayers()) {
             playersTurn(player);
-        }
 
+        }
     }
+
+
 
     public void playersTurn(Player player) {
-
+        System.out.println("Player " + player.getPlayerID() + "\'s turn:");
+        System.out.println("Dealers cards: " + dealer.getDealersCards());
+        System.out.println("Players cards: " + player.getAllCards());
+        displayGameOptions();
     }
 
+    // REQUIRES: numPlayers >= 1, startingMoney >= 1
+    // MODIFIES: ListOfPlayers
+    // EFFECTS: Starts the game and sets up the number of players, balance for each player,
+    // and initializes the dealer
     public void preGameSetUp() {
         System.out.println("Welcome To BlackJack!");
         System.out.println("This BlackJack table pays 2:1");
@@ -68,6 +98,9 @@ public class BlackJackGame {
         dealer = new Dealer();
     }
 
+    // MODIFIES: dealer, player
+    // EFFECTS: starts the game of blackjack off by giving the deal 2 cards, 1 face up and another facedown, then
+    // gives every player 2 cards and displays the current state of the game.
     public void beginRound() {
         System.out.println("Dealers turn!");
         System.out.println("");
@@ -84,11 +117,13 @@ public class BlackJackGame {
         System.out.println(listOfPlayers.getAllPlayersCards());
     }
 
+    // EFFECTS: displays the menu options
     public void displayMenuOptions() {
         System.out.println("Press \"p\" to play");
         System.out.println("Press \"q\" to quit");
     }
 
+    // EFFECTS: displays the game options
     public void displayGameOptions() {
         System.out.println("Press \"h\" to hit");
         System.out.println("Press \"s\" to stand");

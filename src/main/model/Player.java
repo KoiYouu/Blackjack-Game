@@ -60,6 +60,17 @@ public class Player extends BlackJack {
         return balance;
     }
 
+    // REQUIRES: balance >= bet
+    // MODIFIES: this
+    // EFFECTS: doubles the players bet, takes away the players balance and gives the player another card.
+    public Cards playerDouble() {
+        setBet(this.bet * 2);
+        removeBalance(bet);
+        return hitCard();
+    }
+
+
+    // EFFECTS: returns all the players cards in a single string
     public String getAllCards() {
         String cardInfo = "";
         for (Cards card : hand) {
@@ -68,10 +79,38 @@ public class Player extends BlackJack {
         return cardInfo;
     }
 
+    // Requires bet to be > 0 and <= balance
     // MODIFIES: This
-    // EFFECTS: Sets the players bet to the given value
+    // EFFECTS: Sets the players bet to the given value and takes away the bet from balance
     public void setBet(int bet) {
         this.bet = bet;
+        this.balance -= bet;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds double the players bet to their balance, resets their bet to 0, adds a win, and clears their hand
+    public void playerWin() {
+        this.balance += this.bet * 2;
+        this.bet = 0;
+        this.addWin();
+        this.hand.clear();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: returns the players bet, resets their bet to 0, adds a draw, and clears their hand
+    public void playerPush() {
+        this.balance += this.bet;
+        this.bet = 0;
+        this.addDraw();
+        this.hand.clear();
+    }
+
+    // MODIFIES: this
+    // EFFECT: player does not get their bet back, resets their bet to 0, adds a loss, and clears their hand
+    public void playerLoss() {
+        this.bet = 0;
+        this.addLoss();
+        this.hand.clear();
     }
 
     public int getPlayerID() {
