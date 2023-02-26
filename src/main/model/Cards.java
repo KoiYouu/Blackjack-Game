@@ -7,20 +7,23 @@ public class Cards {
     private int value; // value of the card in a blackjack game
     private String suit; // suit of the card
     private boolean facingUp; // true if card is face up, false if it is face down
+    private int randNum; // random number used to dictate what card to pick
 
-    private final String[] deck = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" }; // possible cards
-    private final int[] values = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11}; // value of cards
-    private final String[] suits = {"C", "D", "H", "S"}; // possible suits
+    // possible cards
+    private static final String[] deck = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+    private static final int[] values = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11}; // value of cards
+    private static final String[] suits = {"C", "D", "H", "S"}; // possible suits
 
     private Random random = new Random();
+
 
     // EFFECTS: Creates a playing card with a random cardName and its corresponding value, random suit,
     // and keeps it face up.
     public Cards() {
-        int randNum = random.nextInt(deck.length);
+        randNum = random.nextInt(deck.length);
         cardName = deck[randNum];
         value = values[randNum];
-        suit = suits[random.nextInt(suits.length)];
+        suit = suits[randNum % 4];
         facingUp = true;
     }
 
@@ -40,7 +43,7 @@ public class Cards {
     public String getCardInfo() {
         if (this.facingUp) {
             return "[Name: " + this.getCardName()
-                     + " Suit: " + this.getSuit() + " ]";
+                     + " Suit: " + this.getSuit() + "]";
         } else {
             return "[X]";
         }
@@ -58,9 +61,29 @@ public class Cards {
         return suit;
     }
 
-    public boolean isFacingUp() {
+    public boolean getFacingUp() {
         return facingUp;
     }
 
+    public int getRandNum() {
+        return randNum;
+    }
 
+    // REQUIRES: Index to be from 0-12
+    // EFFECTS: Returns the name of the card with the given index
+    public static String getDeck(int index) {
+        return deck[index];
+    }
+
+    // REQUIRES: Index to be from 0-3
+    // EFFECTS: Returns the suit of the card with the given index
+    public static String getSuits(int index) {
+        return suits[index];
+    }
+
+    // REQUIRES: Index to be from 0-12
+    // EFFECTS: Returns the value of the card with the given index
+    public static int getValues(int index) {
+        return values[index];
+    }
 }

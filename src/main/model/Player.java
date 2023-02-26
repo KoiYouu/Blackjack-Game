@@ -9,7 +9,7 @@ public class Player extends BlackJack {
     private int draws; // players draws
     private int losses; // players losses
     private int bet; // Current bet
-    private int count = 1;
+    private static int count = 1;
 
     /*
      * REQUIRES: startingBalance must be > 0
@@ -58,6 +58,14 @@ public class Player extends BlackJack {
     public int removeBalance(int removedBalance) {
         balance -= removedBalance;
         return balance;
+    }
+
+    public String getAllCards() {
+        String cardInfo = "";
+        for (Cards card : hand) {
+            cardInfo = cardInfo + " " + card.getCardInfo() + " ";
+        }
+        return cardInfo;
     }
 
     // MODIFIES: This

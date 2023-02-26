@@ -19,4 +19,13 @@ public class ListOfPlayers {
     public Player getPlayers(int index) {
         return players.get(index);
     }
+
+    public String getAllPlayersCards() {
+        String allCards = "";
+        for (Player player: players) {
+            allCards += "Player " + player.getPlayerID() + " has "
+                + player.getAllCards();
+        }
+        return allCards;
+    }
 }
