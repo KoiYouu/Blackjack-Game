@@ -42,7 +42,7 @@ class CardsTest {
     void testGetCardInfoFacingUp() {
         int x = card1.getRandNum();
         String test = "[Name: " + Cards.getDeck(x)
-                + " Suit: " + Cards.getSuits(x % 4) + " ]";
+                + " Suit: " + Cards.getSuits(x % 4) + "]";
         assertEquals(test, card1.getCardInfo());
     }
 

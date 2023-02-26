@@ -52,7 +52,7 @@ public class Player extends BlackJack {
         return balance;
     }
 
-    // REQUIRES: removedBalance < 0
+    // REQUIRES: removedBalance > 0
     // MODIFIES: this
     // EFFECTS: Takes away removedBalance from balance and returns the new balance
     public int removeBalance(int removedBalance) {
@@ -63,10 +63,10 @@ public class Player extends BlackJack {
     // REQUIRES: balance >= bet
     // MODIFIES: this
     // EFFECTS: doubles the players bet, takes away the players balance and gives the player another card.
-    public Cards playerDouble() {
+    public void playerDouble() {
+        addBalance(bet);
         setBet(this.bet * 2);
-        removeBalance(bet);
-        return hitCard();
+        this.hitCard();
     }
 
 
