@@ -22,11 +22,21 @@ public class BlackJack {
 
     // EFFECTS: adds up all cards in hand and returns their total value
     public int handValue() {
-        int handValue = 0;
+        int handValueSoft = 0;
+        int handValueHard = 0;
+        boolean aceExists = false;
         for (Cards card : hand) {
-            handValue += card.getValue();
+            handValueHard += card.getValue();
+            if (card.getCardName() == "A") {
+                aceExists = true;
+            }
         }
-        return handValue;
+        handValueSoft = handValueHard + 10;
+        if (handValueHard < 12 && aceExists) {
+            return handValueSoft;
+        } else {
+            return  handValueHard;
+        }
     }
 
     // MODIFIES: this

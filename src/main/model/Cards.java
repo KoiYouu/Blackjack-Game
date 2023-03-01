@@ -11,7 +11,7 @@ public class Cards {
 
     // possible cards
     private static final String[] deck = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
-    private static final int[] values = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11}; // value of cards
+    private static final int[] values = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1}; // value of cards
     private static final String[] suits = {"C", "D", "H", "S"}; // possible suits
 
     private Random random = new Random();

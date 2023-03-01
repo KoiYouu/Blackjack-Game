@@ -23,8 +23,8 @@ public class ListOfPlayersTest {
 
     @Test
     void getPlayers() {
-        assertEquals(39, listOfPlayers.getPlayers(0).getPlayerID());
-        assertEquals(40, listOfPlayers.getPlayers(1).getPlayerID());
+        assertEquals(43, listOfPlayers.getPlayers(0).getPlayerID());
+        assertEquals(44, listOfPlayers.getPlayers(1).getPlayerID());
     }
 
     @Test
@@ -33,9 +33,9 @@ public class ListOfPlayersTest {
         listOfPlayers.getPlayers(1).hitCard();
         int randNum1 = listOfPlayers.getPlayers(0).hand.get(0).getRandNum();
         int randNum2 = listOfPlayers.getPlayers(1).hand.get(0).getRandNum();
-        String compare1 = "Player 37 has " + " [Name: " + Cards.getDeck(randNum1)
+        String compare1 = "Player 41 has " + " [Name: " + Cards.getDeck(randNum1)
                 + " Suit: " + Cards.getSuits(randNum1 % 4) + "]";
-        String compare2 = " Player 38 has " + " [Name: " + Cards.getDeck(randNum2)
+        String compare2 = " Player 42 has " + " [Name: " + Cards.getDeck(randNum2)
                 + " Suit: " + Cards.getSuits(randNum2 % 4) + "] ";
         String compare = compare1 + compare2;
         assertEquals(compare, listOfPlayers.getAllPlayersCards());

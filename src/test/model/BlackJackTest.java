@@ -54,8 +54,8 @@ public abstract class BlackJackTest {
     @Test
     void testHandValue1Card() {
         blackjack.hitCard();
-        int randNum = blackjack.hand.get(0).getRandNum();
-        assertEquals(Cards.getValues(randNum), blackjack.handValue());
+        blackjack.hand.get(0).setSpecificCard(2);
+        assertEquals(Cards.getValues(2), blackjack.handValue());
     }
 
     @Test
@@ -63,10 +63,33 @@ public abstract class BlackJackTest {
         blackjack.hitCard();
         blackjack.hitCard();
         blackjack.hitCard();
-        int randNum1 = blackjack.hand.get(0).getRandNum();
-        int randNum2 = blackjack.hand.get(1).getRandNum();
-        int randNum3 = blackjack.hand.get(2).getRandNum();
-        int totalValue = Cards.getValues(randNum1) + Cards.getValues(randNum2) + Cards.getValues(randNum3);
+        blackjack.hand.get(0).setSpecificCard(2);
+        blackjack.hand.get(1).setSpecificCard(6);
+        blackjack.hand.get(2).setSpecificCard(10);
+        int totalValue = Cards.getValues(2) + Cards.getValues(6) + Cards.getValues(10);
         assertEquals(totalValue, blackjack.handValue());
+    }
+
+    @Test
+    void testHandValueWithAceSoft() {
+        blackjack.hitCard();
+        blackjack.hitCard();
+        blackjack.hand.get(0).setSpecificCard(2);
+        blackjack.hand.get(1).setSpecificCard(12);
+        int totalValue = Cards.getValues(2) + Cards.getValues(12) + 10;
+        assertEquals(totalValue, blackjack.handValue());
+    }
+
+    @Test
+    void testHandValueWithAceHard() {
+        blackjack.hitCard();
+        blackjack.hitCard();
+        blackjack.hitCard();
+        blackjack.hand.get(0).setSpecificCard(5);
+        blackjack.hand.get(1).setSpecificCard(12);
+        blackjack.hand.get(2).setSpecificCard(6);
+        int totalValue = Cards.getValues(5) + Cards.getValues(12) + Cards.getValues(6);
+        assertEquals(totalValue, blackjack.handValue());
+
     }
 }

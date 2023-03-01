@@ -17,7 +17,7 @@ public class PlayerTest extends BlackJackTest {
 
     @Test
     void testConstructor() {
-        assertEquals(35, player.getPlayerID());
+        assertEquals(39, player.getPlayerID());
         assertEquals(1000, player.getBalance());
         assertEquals(0, player.getWins());
         assertEquals(0, player.getDraws());

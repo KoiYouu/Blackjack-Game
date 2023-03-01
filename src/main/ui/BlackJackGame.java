@@ -147,7 +147,7 @@ public class BlackJackGame {
         }
         System.out.println("Dealers turn!");
         dealer.dealersTurn();
-        System.out.println("Dealers Cards: " + dealer.getDealersCards());
+        System.out.println("Dealers Cards: " + dealer.getDealersCards()  + "Hand total: " + dealer.handValue());
         System.out.println("Finished that round!");
     }
 
@@ -184,8 +184,9 @@ public class BlackJackGame {
     // or they stand.
     public void playersTurn(Player player) {
         System.out.println("Player " + player.getPlayerID() + "\'s turn:");
-        System.out.println("Dealers cards: " + dealer.getDealersCards());
-        System.out.println("Players cards: " + player.getAllCards());
+        System.out.println("Dealers cards: " + dealer.getDealersCards() + " Hand total: "
+                + dealer.getHand().get(0).getValue() + "\n");
+        System.out.println("Playersyy cards: " + player.getAllCards() + "Hand total: " + player.handValue());
         while (!player.isStand() && player.handValue() <= 21) {
             displayGameOptions();
             String input = userInput.next();
@@ -210,7 +211,7 @@ public class BlackJackGame {
     public void playerHit(Player player) {
         player.hitCard();
         System.out.println("Hit!");
-        System.out.println("Cards: " + player.getAllCards());
+        System.out.println("Cards: " + player.getAllCards()  + "Hand total: " + player.handValue());
         if (player.handValue() > 21) {
             System.out.println("Bust!");
         }
@@ -225,7 +226,7 @@ public class BlackJackGame {
     public void playerDouble(Player player) {
         player.playerDouble();
         System.out.println("Double!");
-        System.out.println("Cards: " + player.getAllCards());
+        System.out.println("Cards: " + player.getAllCards()  + "Hand total: " + player.handValue());
         if (player.handValue() > 21) {
             System.out.println("Bust!");
         }
@@ -238,7 +239,7 @@ public class BlackJackGame {
     public void playerStand(Player player) {
         player.setStand();
         System.out.println("Stand!");
-        System.out.println("Cards: " + player.getAllCards());
+        System.out.println("Cards: " + player.getAllCards()  + "Hand total: " + player.handValue());
         System.out.println("");
     }
 
@@ -278,8 +279,8 @@ public class BlackJackGame {
         System.out.println("Dealers turn!");
         System.out.println("");
         dealer.startingDealerTurn();
-        System.out.println("Dealer draws: " + dealer.getDealersCards());
-        System.out.println("");
+        System.out.println("Dealer draws: " + dealer.getDealersCards()  + " Hand total: "
+                + dealer.getHand().get(0).getValue() + "\n");
         System.out.println("Now drawing 2 cards for each player:");
         System.out.println("");
         for (int i = 0; i < listOfPlayers.getPlayers().size(); i++) {
