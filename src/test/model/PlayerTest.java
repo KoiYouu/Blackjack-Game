@@ -1,140 +1,96 @@
 package model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PlayerTest extends BlackJackTest {
+public abstract class PlayerTest {
 
-    private Player player;
-
-    @BeforeEach
-    void runBefore() {
-        player = new Player(1000);
-        blackjack = new Player(1000);
-    }
+    protected Player player;
 
     @Test
     void testConstructor() {
-        assertEquals(39, player.getPlayerID());
-        assertEquals(1000, player.getBalance());
-        assertEquals(0, player.getWins());
-        assertEquals(0, player.getDraws());
-        assertEquals(0, player.getLosses());
-        assertEquals(0, player.getBet());
         assertFalse(player.isStand());
+        assertEquals(0, player.hand.size());
+    }
+
+    @Test
+    void testHitCard() {
+        player.hitCard();
+        int randNum = player.hand.get(0).getRandNum();
+        assertEquals(Cards.getValues(randNum  % 13), player.hand.get(0).getValue());
+        assertEquals(Cards.getDeck(randNum % 13), player.hand.get(0).getCardName());
+        assertEquals(Cards.getSuits(randNum % 4), player.hand.get(0).getSuit());
+    }
+
+    @Test
+    void testClearHand(){
+        player.hitCard();
+        player.hitCard();
+        assertEquals(2, player.getHand().size());
+        player.clearHand();
         assertEquals(0, player.getHand().size());
     }
 
     @Test
-    void testAddWin() {
-        player.addWin();
-        assertEquals(1, player.getWins());
-    }
-
-    @Test
-    void testAddDraw() {
-        player.addDraw();
-        assertEquals(1, player.getDraws());
-    }
-
-    @Test
-    void testAddLoss() {
-        player.addLoss();
-        assertEquals(1, player.getLosses());
-    }
-
-    @Test
-    void testAddBalance() {
-        player.addBalance(1000);
-        assertEquals(2000, player.getBalance());
-        assertEquals(2420, player.addBalance(420));
-    }
-
-    @Test
-    void testRemoveBalance() {
-        player.removeBalance(400);
-        assertEquals(600,player.getBalance());
-        assertEquals(0,player.removeBalance(600));
-    }
-
-    @Test
-    void testPlayerDouble() {
-        player.setBet(50);
-        assertEquals(50, player.getBet());
-        assertEquals(950, player.getBalance());
-        player.playerDouble();
-        assertEquals(100, player.getBet());
-        assertEquals(900, player.getBalance());
-        assertEquals(1,player.getHand().size());
-    }
-
-    @Test
-    void testGetAllCards() {
-        player.hitCard();
-        player.hitCard();
-        int randNum1 = player.getHand().get(0).getRandNum();
-        int randNum2 = player.getHand().get(1).getRandNum();
-        String compare = " [Name: " + Cards.getDeck(randNum1) +" Suit: "
-                + Cards.getSuits(randNum1 % 4) + "]  [Name: "
-                + Cards.getDeck(randNum2) + " Suit: "
-                + Cards.getSuits(randNum2 % 4) + "] ";
-        assertEquals(compare, player.getAllCards());
-    }
-
-    @Test
-    void testSetBet() {
-        player.setBet(150);
-        assertEquals(150, player.getBet());
-        assertEquals(850, player.getBalance());
-    }
-
-    @Test
-    void testPlayerWin() {
-        player.hitCard();
+    void testSetStandAndNotStand() {
+        assertFalse(player.isStand());
         player.setStand();
-        player.setBet(50);
-        assertEquals(1, player.getHand().size());
         assertTrue(player.isStand());
-        assertEquals(50, player.getBet());
-        assertEquals(950, player.getBalance());
-        player.playerWin();
-        assertEquals(0, player.getHand().size());
+        player.setNotStand();
         assertFalse(player.isStand());
-        assertEquals(0, player.getBet());
-        assertEquals(1050, player.getBalance());
     }
 
     @Test
-    void testPlayerPush() {
+    void testGetCard() {
         player.hitCard();
-        player.setStand();
-        player.setBet(50);
-        assertEquals(1, player.getHand().size());
-        assertTrue(player.isStand());
-        assertEquals(50, player.getBet());
-        assertEquals(950, player.getBalance());
-        player.playerPush();
-        assertEquals(0, player.getHand().size());
-        assertFalse(player.isStand());
-        assertEquals(0, player.getBet());
-        assertEquals(1000, player.getBalance());
+        int randNum = player.hand.get(0).getRandNum();
+        String cardInfo = "[Name: " + Cards.getDeck(randNum  % 13)
+                + " Suit: " + Cards.getSuits(randNum % 4) + "]";
+        assertEquals(cardInfo , player.getCards(0));
     }
 
     @Test
-    void testPlayerLose() {
+    void testHandValue1Card() {
         player.hitCard();
-        player.setStand();
-        player.setBet(50);
-        assertEquals(1, player.getHand().size());
-        assertTrue(player.isStand());
-        assertEquals(50, player.getBet());
-        assertEquals(950, player.getBalance());
-        player.playerLoss();
-        assertEquals(0, player.getHand().size());
-        assertFalse(player.isStand());
-        assertEquals(0, player.getBet());
-        assertEquals(950, player.getBalance());
+        player.hand.get(0).setSpecificCard(2);
+        assertEquals(Cards.getValues(2), player.handValueHard());
+    }
+
+    @Test
+    void testHandValueMultipleCards() {
+        player.hitCard();
+        player.hitCard();
+        player.hitCard();
+        player.hand.get(0).setSpecificCard(2);
+        player.hand.get(1).setSpecificCard(6);
+        player.hand.get(2).setSpecificCard(10);
+        int totalValue = Cards.getValues(2) + Cards.getValues(6) + Cards.getValues(10);
+        assertEquals(totalValue, player.handValueHard());
+    }
+
+    @Test
+    void testHandValueWithAceSoft() {
+        player.hitCard();
+        player.hitCard();
+        player.hand.get(0).setSpecificCard(2);
+        player.hand.get(1).setSpecificCard(12);
+        int totalValue = Cards.getValues(2) + Cards.getValues(12);
+        assertEquals(totalValue + 10, player.handValueSoft());
+        assertEquals(totalValue, player.handValueHard());
+    }
+
+    @Test
+    void testHandValueWithAceHard() {
+        player.hitCard();
+        player.hitCard();
+        player.hitCard();
+        player.hand.get(0).setSpecificCard(5);
+        player.hand.get(1).setSpecificCard(12);
+        player.hand.get(2).setSpecificCard(6);
+        int totalValue = Cards.getValues(5) + Cards.getValues(12) + Cards.getValues(6);
+        assertEquals(totalValue, player.handValueHard());
+        assertEquals(totalValue, player.handValueSoft());
+
     }
 }

@@ -4,20 +4,20 @@
 
 Blackjack is one of the most popular games at casinos.
 The objective of the game is to beat the dealer / house. 
-Every player is dealt 2 cards at the beginning of the game
+Every gambler is dealt 2 cards at the beginning of the game
 and takes turns to "hit" (ask for another card), stand
 (keep his current hand as it is), or double (hit and double
 the current hand stake). There is another action you can do which 
 is split (create 2 hands from a pair) but that seems a bit too advanced
-for now, maybe I will impliment it later in the project.
+for now, maybe I will implement it later in the project.
 The dealer also has a hand which follows a strict set of rules.
 The dealer must hit until their hand value reaches 17 or higher
 at which point they stand. f the dealer has a soft 17 
 (a hand value of 17 including an Ace counted as 11), 
-they must hit.If a player's hand exceeds 21, they lose the round, 
-even if the dealer also busts. If both the player and dealer 
+they must hit.If a gambler's hand exceeds 21, they lose the round, 
+even if the dealer also busts. If both the gambler and dealer 
 have the same hand value, the round is a push (tie) and the
-player's bet is returned. The dealer only reveals one of their cards at
+gambler's bet is returned. The dealer only reveals one of their cards at
 the start of the round, with the second card revealed only after all
 players have completed their turns.
 
@@ -50,7 +50,7 @@ real money.
 
 First launch the game with the run button located at the top, 
 Specify how many players are playing and the starting balance for everyone. The game
-then proceeds as a regular blackjack game with each player specifying to hit, stand, or double
+then proceeds as a regular blackjack game with each gambler specifying to hit, stand, or double
 during their turns. This continues until all players run out of money, or you close the game.
 
 ## User Stories
@@ -59,7 +59,13 @@ during their turns. This continues until all players run out of money, or you cl
 
 - As a user, I want to be able to add a card to my list of players.
 
-- As a user, I want to be able to add a player to my list of players.
+- As a user, I want to be able to add a gambler to my list of players.
 
 - As a user, I want to be able to view a scoreboard of my list of players.
 
+- As a user, I want to have the option to be able to save the progress 
+of all the players with their wins, draws, losses, and balance 
+or just exit the program
+
+- As a user, I want to be able to load my progress that I had saved
+or start a game new.

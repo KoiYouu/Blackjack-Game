@@ -19,13 +19,13 @@ class CardsTest {
     @Test
     void testCardsConstructor() {
         assertTrue(card1.getFacingUp());
-        assertEquals(Cards.getDeck(card1.getRandNum()), card1.getCardName());
-        assertEquals(Cards.getValues(card1.getRandNum()), card1.getValue());
+        assertEquals(Cards.getDeck(card1.getRandNum() % 13), card1.getCardName());
+        assertEquals(Cards.getValues(card1.getRandNum() % 13), card1.getValue());
         assertEquals(Cards.getSuits(card1.getRandNum() % 4), card1.getSuit());
 
         assertTrue(card2.getFacingUp());
-        assertEquals(Cards.getDeck(card2.getRandNum()), card2.getCardName());
-        assertEquals(Cards.getValues(card2.getRandNum()), card2.getValue());
+        assertEquals(Cards.getDeck(card2.getRandNum() % 13), card2.getCardName());
+        assertEquals(Cards.getValues(card2.getRandNum() % 13), card2.getValue());
         assertEquals(Cards.getSuits(card2.getRandNum() % 4), card2.getSuit());
     }
 
@@ -41,7 +41,7 @@ class CardsTest {
     @Test
     void testGetCardInfoFacingUp() {
         int x = card1.getRandNum();
-        String test = "[Name: " + Cards.getDeck(x)
+        String test = "[Name: " + Cards.getDeck(x  % 13)
                 + " Suit: " + Cards.getSuits(x % 4) + "]";
         assertEquals(test, card1.getCardInfo());
     }

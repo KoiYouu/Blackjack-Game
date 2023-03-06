@@ -2,145 +2,82 @@ package model;
 
 import java.util.ArrayList;
 
-public class Player extends BlackJack {
-    private int playerID; // unique player id
-    private int balance; // players balance
-    private int wins; // players wins
-    private int draws; // players draws
-    private int losses; // players losses
-    private int bet; // Current bet
-    private static int count = 1;
+public class Player {
+    protected ArrayList<Cards> hand; // players hand with all its cards
+    protected boolean stand; // True if player is standing, false if player is not
 
-    /*
-     * REQUIRES: startingBalance must be > 0
-     * EFFECTS: Creates a player with the given starting balance, with an empty hand of cards,
-     * a bet of $0, makes the player not standing, no wins / losses / draws, and a unique player ID.
-     */
-    public Player(int startingBalance) {
-        super();
-        playerID = count++;
-        balance = startingBalance;
-        wins = 0;
-        draws = 0;
-        losses = 0;
-        bet = 0;
+    // EFFECT: Super constructor for dealer and player with an empty hand of cards and not standing
+    public Player() {
+        hand = new ArrayList<>();
+        stand = false;
     }
 
     // MODIFIES: this
-    // EFFECTS: Increment wins by 1
-    public void addWin() {
-        this.wins += 1;
+    // EFFECTS: adds a new random card to our hand and returns what card we got
+    public Cards hitCard() {
+        Cards newCard = new Cards();
+        hand.add(newCard);
+        return newCard;
     }
 
-    // MODIFIES: this
-    // EFFECTS: Increment draws by 1
-    public void addDraw() {
-        this.draws += 1;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: Increment losses by 1
-    public void addLoss() {
-        this.losses += 1;
-    }
-
-    // REQUIRES: additionalBalance > 0
-    // MODIFIES: this
-    // EFFECTS: adds additionalBalance to current balance and returns the new balance
-    public int addBalance(int additionalBalance) {
-        balance += additionalBalance;
-        return balance;
-    }
-
-    // REQUIRES: removedBalance > 0
-    // MODIFIES: this
-    // EFFECTS: Takes away removedBalance from balance and returns the new balance
-    public int removeBalance(int removedBalance) {
-        balance -= removedBalance;
-        return balance;
-    }
-
-    // REQUIRES: balance >= bet
-    // MODIFIES: this
-    // EFFECTS: doubles the players bet, takes away the players balance and gives the player another card.
-    public void playerDouble() {
-        addBalance(bet);
-        setBet(this.bet * 2);
-        this.hitCard();
-    }
-
-
-    // EFFECTS: returns all the players cards in a single string
-    public String getAllCards() {
-        String cardInfo = "";
+    // EFFECTS: checks if there is an ace in the players hand, returns true if there is false otherwise
+    public boolean checkAceInHand() {
+        boolean aceExists = false;
         for (Cards card : hand) {
-            cardInfo = cardInfo + " " + card.getCardInfo() + " ";
+            if (card.getCardName() == "A") {
+                aceExists = true;
+            }
         }
-        return cardInfo;
+        return aceExists;
     }
 
-    // Requires bet to be > 0 and <= balance
+    // EFFECTS: adds up all cards in hand and returns their total blackjack hard value
+    public int handValueHard() {
+        int handValueHard = 0;
+        for (Cards card : hand) {
+            handValueHard += card.getValue();
+        }
+        return handValueHard;
+    }
+
+    public int handValueSoft() {
+        int handValueSoft = handValueHard();
+        if (handValueHard() < 12 && checkAceInHand()) {
+            handValueSoft += 10;
+        }
+        return handValueSoft;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: clears hand of all cards
+    public void clearHand() {
+        hand.clear();
+    }
+
+    // REQUIRES index to be >=0 and < hand.size()
+    // EFFECTS: returns the info of the card at our given position
+    public String getCards(int index) {
+        return hand.get(index).getCardInfo();
+    }
+
     // MODIFIES: This
-    // EFFECTS: Sets the players bet to the given value and takes away the bet from balance
-    public void setBet(int bet) {
-        this.bet = bet;
-        this.balance -= bet;
+    // EFFECTS: Sets the player to be standing
+    public void setStand() {
+        stand = true;
     }
 
-    // MODIFIES: this
-    // EFFECTS: adds double the players bet to their balance, resets their bet to 0, adds a win, clears their hand,
-    // and sets them to not stand
-    public void playerWin() {
-        this.balance += this.bet * 2;
-        this.bet = 0;
-        this.addWin();
-        this.hand.clear();
-        this.setNotStand();
+    // MODIFIES: This
+    // EFFECTS: Sets the player to not be standing
+    public void setNotStand() {
+        stand = false;
     }
 
-    // MODIFIES: this
-    // EFFECTS: returns the players bet, resets their bet to 0, adds a draw, clears their hand,
-    // and sets them to not stand
-    public void playerPush() {
-        this.balance += this.bet;
-        this.bet = 0;
-        this.addDraw();
-        this.hand.clear();
-        this.setNotStand();
+
+    public ArrayList<Cards> getHand() {
+        return hand;
     }
 
-    // MODIFIES: this
-    // EFFECT: player does not get their bet back, resets their bet to 0, adds a loss, clears their hand,
-    // and sets them to not stand
-    public void playerLoss() {
-        this.bet = 0;
-        this.addLoss();
-        this.hand.clear();
-        this.setNotStand();
+    public boolean isStand() {
+        return stand;
     }
-
-    public int getPlayerID() {
-        return playerID;
-    }
-
-    public int getBalance() {
-        return balance;
-    }
-
-    public int getWins() {
-        return wins;
-    }
-
-    public int getDraws() {
-        return draws;
-    }
-
-    public int getLosses() {
-        return losses;
-    }
-
-    public int getBet() {
-        return bet;
-    }
-
 }

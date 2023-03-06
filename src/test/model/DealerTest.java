@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DealerTest extends BlackJackTest {
+public class DealerTest extends PlayerTest {
 
     private Dealer dealer;
 
     @BeforeEach
     void runBefore() {
         dealer = new Dealer();
-        blackjack = new Dealer();
+        player = new Dealer();
     }
 
     @Test
@@ -47,8 +47,7 @@ public class DealerTest extends BlackJackTest {
         dealer.hand.get(0).setSpecificCard(0);
         dealer.hand.get(1).setSpecificCard(0);
         dealer.dealersTurn();
-        assertTrue(dealer.handValue() >= 16);
-        assertTrue(dealer.hand.size() >= 4);
+        assertTrue(dealer.handValueSoft() >= 16);
     }
 
     @Test
@@ -58,8 +57,8 @@ public class DealerTest extends BlackJackTest {
         dealer.hand.get(0).setSpecificCard(9);
         dealer.hand.get(1).setSpecificCard(9);
         dealer.dealersTurn();
-        assertTrue(dealer.handValue() >= 16);
-        assertEquals(20, dealer.handValue());
+        assertTrue(dealer.handValueHard() >= 16);
+        assertEquals(20, dealer.handValueHard());
         assertEquals(2, dealer.hand.size());
     }
 
@@ -67,7 +66,7 @@ public class DealerTest extends BlackJackTest {
     void testGetDealersCardsAFaceDownCard() {
         dealer.startingDealerTurn();
         int randNum = dealer.getHand().get(0).getRandNum();
-        String compare = " [Name: " + Cards.getDeck(randNum)
+        String compare = " [Name: " + Cards.getDeck(randNum % 13)
                 + " Suit: " + Cards.getSuits(randNum % 4) + "]" + " [X]";
         assertEquals(compare, dealer.getDealersCards());
 
@@ -79,9 +78,9 @@ public class DealerTest extends BlackJackTest {
         dealer.hitCard();
         int randNum1 = dealer.getHand().get(0).getRandNum();
         int randNum2 = dealer.getHand().get(1).getRandNum();
-        String compare = " [Name: " + Cards.getDeck(randNum1)
+        String compare = " [Name: " + Cards.getDeck(randNum1 % 13)
                 + " Suit: " + Cards.getSuits(randNum1 % 4) + "]"
-                + " [Name: " + Cards.getDeck(randNum2)
+                + " [Name: " + Cards.getDeck(randNum2 % 13)
                 + " Suit: " + Cards.getSuits(randNum2 % 4) + "]";
         assertEquals(compare, dealer.getDealersCards());
     }

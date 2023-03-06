@@ -20,9 +20,9 @@ public class Cards {
     // EFFECTS: Creates a playing card with a random cardName and its corresponding value, random suit,
     // and keeps it face up.
     public Cards() {
-        randNum = random.nextInt(deck.length);
-        cardName = deck[randNum];
-        value = values[randNum];
+        randNum = random.nextInt(1000000);
+        cardName = deck[randNum % 13];
+        value = values[randNum % 13];
         suit = suits[randNum % 4];
         facingUp = true;
     }

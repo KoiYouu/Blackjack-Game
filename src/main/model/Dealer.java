@@ -1,8 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-
-public class Dealer extends BlackJack {
+public class Dealer extends Player {
 
     // EFFECTS: Creates a dealer with an empty hand and is not standing
     public Dealer() {
@@ -24,7 +22,7 @@ public class Dealer extends BlackJack {
     // and then makes the dealer stand.
     public void dealersTurn() {
         this.hand.get(1).setCardFaceUp();
-        while (this.handValue() <= 16) {
+        while (this.handValueSoft() <= 17) {
             hitCard();
         }
         this.setStand();

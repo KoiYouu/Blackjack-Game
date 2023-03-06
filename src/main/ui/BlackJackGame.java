@@ -1,16 +1,15 @@
 package ui;
 
 import model.Dealer;
-import model.ListOfPlayers;
-import model.Player;
+import model.Gambler;
+import model.ListOfGamblers;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 public class BlackJackGame {
     private Scanner userInput = new Scanner(System.in);
     private Dealer dealer;
-    private ListOfPlayers listOfPlayers;
+    private ListOfGamblers listOfGamblers;
     private boolean gameOver = false;
 
 
@@ -60,10 +59,10 @@ public class BlackJackGame {
     // EFFECTS: prints out a scoreboard of every players wins losses draws and balance
     public void viewScoreBoard() {
         System.out.println("");
-        for (Player player: listOfPlayers.getPlayers()) {
-            System.out.println("Player " + player.getPlayerID() + " stats: |Wins "
-                    + player.getWins() + "| |Losses " + player.getLosses()
-                        + "| |Draws " + player.getDraws() + "| |Balance $" + player.getBalance() + "|");
+        for (Gambler gambler : listOfGamblers.getGamblers()) {
+            System.out.println("Player " + gambler.getGamblerID() + " stats: |Wins "
+                    + gambler.getWins() + "| |Losses " + gambler.getLosses()
+                        + "| |Draws " + gambler.getDraws() + "| |Balance $" + gambler.getBalance() + "|");
         }
         System.out.println("");
     }
@@ -80,24 +79,24 @@ public class BlackJackGame {
                 System.out.println("Please enter a valid number");
             }
         }
-        listOfPlayers.getPlayers().add(new Player(input));
-        int lastIndex = listOfPlayers.getPlayers().size() - 1;
+        listOfGamblers.getGamblers().add(new Gambler(input));
+        int lastIndex = listOfGamblers.getGamblers().size() - 1;
         System.out.println("Successfully added new player with ID "
-                + listOfPlayers.getPlayers(lastIndex).getPlayerID()
-                    + " with balance of $" + listOfPlayers.getPlayers(lastIndex).getBalance());
+                + listOfGamblers.getGamblers(lastIndex).getGamblerID()
+                    + " with balance of $" + listOfGamblers.getGamblers(lastIndex).getBalance());
 
     }
 
-    // REQUIRES: moneyToAdd > 0 and input for player index to be >= 1 and <= listOfPlayers.getPlayers().size()
+    // REQUIRES: moneyToAdd > 0 and input for player index to be >= 1 and <= listOfPlayers.getGamblers().size()
     // MODIFIES: this, player
     // EFFECTS: adds specified money to the specified player
     public void addBalanceToPlayer() {
-        System.out.println("Please specify which player to add money to from [1-" + listOfPlayers.getPlayers().size()
+        System.out.println("Please specify which player to add money to from [1-" + listOfGamblers.getGamblers().size()
                 + "]");
         int input = 0;
-        while (input < 1 || input > listOfPlayers.getPlayers().size()) {
+        while (input < 1 || input > listOfGamblers.getGamblers().size()) {
             input = userInput.nextInt();
-            if (input < 1 || input > listOfPlayers.getPlayers().size()) {
+            if (input < 1 || input > listOfGamblers.getGamblers().size()) {
                 System.out.println("Please enter a valid number");
             }
         }
@@ -111,43 +110,43 @@ public class BlackJackGame {
             }
         }
         System.out.println("Adding $" + moneyToAdd);
-        listOfPlayers.getPlayers(input - 1).addBalance(moneyToAdd);
-        System.out.println("Player " + listOfPlayers.getPlayers(input - 1).getPlayerID()
+        listOfGamblers.getGamblers(input - 1).addBalance(moneyToAdd);
+        System.out.println("Player " + listOfGamblers.getGamblers(input - 1).getGamblerID()
                 + " has received $" + moneyToAdd + " and their new balance is $"
-                    + listOfPlayers.getPlayers(input - 1).getBalance());
+                    + listOfGamblers.getGamblers(input - 1).getBalance());
     }
 
     // REQUIRES: bet >= 1 and <= players balance
     // MODIFIES: player
     // EFFECT: sets all the players bets and takes away the bet from their balance
     public void getBets() {
-        for (Player player: listOfPlayers.getPlayers()) {
-            System.out.println("Player " + player.getPlayerID() + " your current balance is: $"
-                    + player.getBalance());
-            System.out.println("How much would you like to bet? [Must range from 1-" + player.getBalance()
+        for (Gambler gambler : listOfGamblers.getGamblers()) {
+            System.out.println("Player " + gambler.getGamblerID() + " your current balance is: $"
+                    + gambler.getBalance());
+            System.out.println("How much would you like to bet? [Must range from 1-" + gambler.getBalance()
                     + "]");
             int bet = 0;
-            while (bet <= 0 || bet > player.getBalance()) {
+            while (bet <= 0 || bet > gambler.getBalance()) {
                 bet = userInput.nextInt();
-                if (bet <= 0 || bet > player.getBalance()) {
+                if (bet <= 0 || bet > gambler.getBalance()) {
                     System.out.println("Please enter a valid number");
                 }
             }
-            player.setBet(bet);
+            gambler.setBet(bet);
         }
     }
 
     // MODIFIES: this, dealer, player
     // EFFECTS: Plays out a single round of blackjack asking for every players actions,
-    // and then finially finishing it off with the dealers turn
+    // and then finally finishing it off with the dealers turn
     public void playGame() {
         beginRound();
-        for (Player player: listOfPlayers.getPlayers()) {
-            playersTurn(player);
+        for (Gambler gambler : listOfGamblers.getGamblers()) {
+            playersTurn(gambler);
         }
         System.out.println("Dealers turn!");
         dealer.dealersTurn();
-        System.out.println("Dealers Cards: " + dealer.getDealersCards()  + "Hand total: " + dealer.handValue());
+        System.out.println("Dealers Cards: " + dealer.getDealersCards()  + "Hand total: " + dealer.handValueSoft());
         System.out.println("Finished that round!");
     }
 
@@ -156,23 +155,23 @@ public class BlackJackGame {
     // or does nothing if player did not win, returns players bet if they pushed
     public void payOut() {
         System.out.println("Now to recap who won and lost with their respective payouts! \n");
-        for (Player player: listOfPlayers.getPlayers()) {
-            if (player.handValue() <= 21 && dealer.handValue() > 21) {
-                System.out.println("Player " + player.getPlayerID() + " wins!");
-                System.out.println("They earned a total of $" + player.getBet() + "\n");
-                player.playerWin();
-            } else if (player.handValue() <= 21 && player.handValue() > dealer.handValue()) {
-                System.out.println("Player " + player.getPlayerID() + " wins!");
-                System.out.println("They earned a total of $" + player.getBet() + "\n");
-                player.playerWin();
-            } else if (player.handValue() <= 21 && player.handValue() == dealer.handValue()) {
-                System.out.println("Player " + player.getPlayerID() + " pushes!");
-                System.out.println("They managed to keep their $" + player.getBet() + "\n");
-                player.playerPush();
+        for (Gambler gambler : listOfGamblers.getGamblers()) {
+            if (gambler.handValueHard() <= 21 && dealer.handValueHard() > 21) {
+                System.out.println("Player " + gambler.getGamblerID() + " wins!");
+                System.out.println("They earned a total of $" + gambler.getBet() + "\n");
+                gambler.gamblerWin();
+            } else if (gambler.handValueHard() <= 21 && gambler.handValueHard() > dealer.handValueHard()) {
+                System.out.println("Player " + gambler.getGamblerID() + " wins!");
+                System.out.println("They earned a total of $" + gambler.getBet() + "\n");
+                gambler.gamblerWin();
+            } else if (gambler.handValueHard() <= 21 && gambler.handValueHard() == dealer.handValueHard()) {
+                System.out.println("Player " + gambler.getGamblerID() + " pushes!");
+                System.out.println("They managed to keep their $" + gambler.getBet() + "\n");
+                gambler.gamblerPush();
             } else {
-                System.out.println("Player " + player.getPlayerID() + " loses!");
-                System.out.println("They lost a total of $" + player.getBet() + "\n");
-                player.playerLoss();
+                System.out.println("Player " + gambler.getGamblerID() + " loses!");
+                System.out.println("They lost a total of $" + gambler.getBet() + "\n");
+                gambler.gamblerLoss();
             }
         }
     }
@@ -182,21 +181,25 @@ public class BlackJackGame {
     // EFFECTS: gets the players input for what to do during their turn and acts accordingly,
     // h for hit, s for stand, d for double, stops allowing user to interact once card total reaches > 21
     // or they stand.
-    public void playersTurn(Player player) {
-        System.out.println("Player " + player.getPlayerID() + "\'s turn:");
+    public void playersTurn(Gambler gambler) {
+        System.out.println("Player " + gambler.getGamblerID() + "\'s turn:");
         System.out.println("Dealers cards: " + dealer.getDealersCards() + " Hand total: "
                 + dealer.getHand().get(0).getValue() + "\n");
-        System.out.println("Playersyy cards: " + player.getAllCards() + "Hand total: " + player.handValue());
-        while (!player.isStand() && player.handValue() <= 21) {
+        if (gambler.checkAceInHand() && gambler.handValueHard() < 12) {
+            System.out.println("Players cards: " + gambler.getAllCards()  + "Hand total: " + gambler.handValueHard()
+                    + "/" + gambler.handValueSoft());
+        } else {
+            System.out.println("Players cards: " + gambler.getAllCards() + "Hand total: " + gambler.handValueHard());
+        }
+        while (!gambler.isStand() && gambler.handValueHard() <= 21 && gambler.handValueSoft() != 21) {
             displayGameOptions();
-            String input = userInput.next();
-            input.toLowerCase();
+            String input = userInput.next().toLowerCase();
             if (input.equals("h")) {
-                playerHit(player);
+                playerHit(gambler);
             } else if (input.equals("d")) {
-                playerDouble(player);
+                playerDouble(gambler);
             } else if (input.equals("s")) {
-                playerStand(player);
+                playerStand(gambler);
             } else {
                 System.out.println("Please choose from one of the listed options.");
                 displayGameOptions();
@@ -208,11 +211,16 @@ public class BlackJackGame {
     // MODIFIES: player
     // EFFECT: gives player another card and displays all the players current cards
     // gives a message if the hit busts the player
-    public void playerHit(Player player) {
-        player.hitCard();
+    public void playerHit(Gambler gambler) {
+        gambler.hitCard();
         System.out.println("Hit!");
-        System.out.println("Cards: " + player.getAllCards()  + "Hand total: " + player.handValue());
-        if (player.handValue() > 21) {
+        if ((gambler.checkAceInHand() && gambler.handValueHard() < 12)) {
+            System.out.println("Cards: " + gambler.getAllCards()  + "Hand total: " + gambler.handValueHard()
+                    + "/" + gambler.handValueSoft());
+        } else {
+            System.out.println("Cards: " + gambler.getAllCards() + "Hand total: " + gambler.handValueHard());
+        }
+        if (gambler.handValueHard() > 21) {
             System.out.println("Bust!");
         }
         System.out.println("");
@@ -223,11 +231,16 @@ public class BlackJackGame {
     // EFFECT: gives player another card, doubles their bet,
     // and displays all the players current cards
     // gives a message if the hit busts the player
-    public void playerDouble(Player player) {
-        player.playerDouble();
+    public void playerDouble(Gambler gambler) {
+        gambler.gamblerDouble();
         System.out.println("Double!");
-        System.out.println("Cards: " + player.getAllCards()  + "Hand total: " + player.handValue());
-        if (player.handValue() > 21) {
+        if ((gambler.checkAceInHand() && gambler.handValueHard() < 12)) {
+            System.out.println("Cards: " + gambler.getAllCards()  + "Hand total: " + gambler.handValueHard()
+                    + "/" + gambler.handValueSoft());
+        } else {
+            System.out.println("Cards: " + gambler.getAllCards() + "Hand total: " + gambler.handValueHard());
+        }
+        if (gambler.handValueHard() > 21) {
             System.out.println("Bust!");
         }
         System.out.println("");
@@ -236,10 +249,10 @@ public class BlackJackGame {
     // REQUIRES: non-null player object
     // MODIFIES: player
     // EFFECT: changes the player to be standing and shows all their cards
-    public void playerStand(Player player) {
-        player.setStand();
+    public void playerStand(Gambler gambler) {
+        gambler.setStand();
         System.out.println("Stand!");
-        System.out.println("Cards: " + player.getAllCards()  + "Hand total: " + player.handValue());
+        System.out.println("Cards: " + gambler.getAllCards()  + "Hand total: " + gambler.handValueSoft());
         System.out.println("");
     }
 
@@ -249,7 +262,7 @@ public class BlackJackGame {
     // and initializes the dealer
     public void preGameSetUp() {
         System.out.println("Welcome To BlackJack!");
-        System.out.println("This BlackJack table pays 2:1 \n");
+        System.out.println("This BlackJack table pays 2:1 and the dealer stands on a hard 17 and hits on a soft 17 \n");
         System.out.println("Please enter how many players are playing (Recommended size to be less then 6)");
         int numPlayers = 0;
         while (numPlayers < 1) {
@@ -268,7 +281,7 @@ public class BlackJackGame {
             }
         }
         System.out.println("You have given everyone $" + startingMoney + " to start with! \n");
-        listOfPlayers = new ListOfPlayers(numPlayers, startingMoney);
+        listOfGamblers = new ListOfGamblers(numPlayers, startingMoney);
         dealer = new Dealer();
     }
 
@@ -283,11 +296,11 @@ public class BlackJackGame {
                 + dealer.getHand().get(0).getValue() + "\n");
         System.out.println("Now drawing 2 cards for each player:");
         System.out.println("");
-        for (int i = 0; i < listOfPlayers.getPlayers().size(); i++) {
-            listOfPlayers.getPlayers(i).hitCard();
-            listOfPlayers.getPlayers(i).hitCard();
+        for (int i = 0; i < listOfGamblers.getGamblers().size(); i++) {
+            listOfGamblers.getGamblers(i).hitCard();
+            listOfGamblers.getGamblers(i).hitCard();
         }
-        System.out.println(listOfPlayers.getAllPlayersCards());
+        System.out.println(listOfGamblers.getAllGamblersCards());
         System.out.println("");
     }
 
