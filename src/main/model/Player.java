@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+// represents an abstract class player which has the general similarities between a gambler and dealer
 public class Player {
     protected ArrayList<Cards> hand; // players hand with all its cards
     protected boolean stand; // True if player is standing, false if player is not

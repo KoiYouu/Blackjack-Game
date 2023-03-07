@@ -1,5 +1,6 @@
 package model;
 
+// represents the dealer in a game of blackjack
 public class Dealer extends Player {
 
     // EFFECTS: Creates a dealer with an empty hand and is not standing

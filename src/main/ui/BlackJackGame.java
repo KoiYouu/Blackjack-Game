@@ -3,18 +3,31 @@ package ui;
 import model.Dealer;
 import model.Gambler;
 import model.ListOfGamblers;
+import persistance.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
+// represents the game of blackjack
 public class BlackJackGame {
-    private Scanner userInput = new Scanner(System.in);
+    private Scanner userInput;
     private Dealer dealer;
     private ListOfGamblers listOfGamblers;
     private boolean gameOver = false;
+    private static final String SAVELOCATION = "./data/BlackJackGame.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
 
+    // MODIFIES this
     // EFFECTS: Creates a game of blackjack
-    public BlackJackGame() {
+    public BlackJackGame() throws FileNotFoundException {
+        userInput = new Scanner(System.in);
+        jsonWriter = new JsonWriter(SAVELOCATION);
+        jsonReader = new JsonReader(SAVELOCATION);
+        dealer = new Dealer();
         this.startGame();
     }
 
@@ -27,21 +40,21 @@ public class BlackJackGame {
         preGameSetUp();
         while (!gameOver) {
             displayMenuOptions();
-            String input = userInput.next();
-            input = input.toLowerCase();
+            String input = userInput.next().toLowerCase();
             if (input.equals("q")) {
                 gameOver = true;
             } else if (input.equals("p")) {
-                getBets();
-                playGame();
-                payOut();
-                resetEveryone();
+                play();
             } else if (input.equals("b")) {
                 addBalanceToPlayer();
             } else if (input.equals("n")) {
                 addPlayer();
-            } else if (input.equals("s")) {
+            } else if (input.equals("v")) {
                 viewScoreBoard();
+            } else if (input.equals("s")) {
+                saveGameData();
+            } else if (input.equals("l")) {
+                loadGameData();
             } else {
                 System.out.println("Please choose from given options.");
             }
@@ -49,9 +62,19 @@ public class BlackJackGame {
         System.out.println("See you next time!");
     }
 
+    // MODIFIES: dealer, player, this
+    // EFFECTS: runs a standard game of blackjack, gets players bets,
+    // plays the game, pays people out, and resets the dealers hands
+    public void play() {
+        getBets();
+        playGame();
+        payOut();
+        resetDealer();
+    }
+
     // MODIFIES: dealer
     // EFFECTS: clears dealers hand and makes him not stand
-    public void resetEveryone() {
+    public void resetDealer() {
         dealer.clearHand();
         dealer.setNotStand();
     }
@@ -282,7 +305,6 @@ public class BlackJackGame {
         }
         System.out.println("You have given everyone $" + startingMoney + " to start with! \n");
         listOfGamblers = new ListOfGamblers(numPlayers, startingMoney);
-        dealer = new Dealer();
     }
 
     // MODIFIES: dealer, player
@@ -310,7 +332,9 @@ public class BlackJackGame {
         System.out.println("Press \"q\" to quit");
         System.out.println("Press \"b\" to add balance to a player");
         System.out.println("Press \"n\" to add a new player");
-        System.out.println("Press \"s\" to view the scoreboard");
+        System.out.println("Press \"v\" to view the scoreboard");
+        System.out.println("Press \"s\" to save your current game, will overwrite previous save");
+        System.out.println("Press \"l\" to load your save, will overwrite your current data");
     }
 
     // EFFECTS: displays the game options
@@ -318,5 +342,28 @@ public class BlackJackGame {
         System.out.println("Press \"h\" to hit");
         System.out.println("Press \"s\" to stand");
         System.out.println("Press \"d\" to double");
+    }
+
+    // EFFECTS: saves the gambler data to file
+    private void saveGameData() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(listOfGamblers);
+            jsonWriter.close();
+            System.out.println("Saved gambler data to " + SAVELOCATION);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + SAVELOCATION);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads gambler data from file
+    private void loadGameData() {
+        try {
+            listOfGamblers = jsonReader.read();
+            System.out.println("Loaded gambler data from " + SAVELOCATION);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + SAVELOCATION);
+        }
     }
 }

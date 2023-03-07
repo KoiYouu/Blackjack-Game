@@ -2,6 +2,7 @@ package model;
 
 import java.util.Random;
 
+// represents all the cards in a regular deck
 public class Cards {
     private String cardName; // name of the card ex. A, 2, 3, ..., J, Q, K
     private int value; // value of the card in a blackjack game

@@ -1,7 +1,11 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
+// represents multiple gamblers
 public class ListOfGamblers {
     private ArrayList<Gambler> gamblers;
 
@@ -13,6 +17,10 @@ public class ListOfGamblers {
         for (int i = 0; i < numGamblers; i++) {
             gamblers.add(new Gambler(startingBalance));
         }
+    }
+
+    public ListOfGamblers(ArrayList<Gambler> gamblers) {
+        this.gamblers = gamblers;
     }
 
     public ArrayList<Gambler> getGamblers() {
@@ -30,8 +38,27 @@ public class ListOfGamblers {
         String allCards = "";
         for (Gambler gambler : gamblers) {
             allCards = allCards + "Player " + gambler.getGamblerID() + " has "
-                + gambler.getAllCards();
+                    + gambler.getAllCards();
         }
         return allCards;
     }
+
+    // EFFECTS: returns this as a Json object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("gambler", gamblerToJson());
+        return json;
+    }
+
+    // EFFECTS: returns gamblers in a listOfGamblers as a JSON array
+    private JSONArray gamblerToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Gambler gambler : gamblers) {
+            jsonArray.put(gambler.toJson());
+        }
+
+        return jsonArray;
+    }
 }
+

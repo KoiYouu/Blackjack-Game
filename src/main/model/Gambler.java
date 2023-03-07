@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+
+// represents the gambler in a game of blackjack
 public class Gambler extends Player {
     private int gamblerID; // unique gambler id
     private int balance; // gamblers balance
@@ -139,6 +142,32 @@ public class Gambler extends Player {
 
     public int getBet() {
         return bet;
+    }
+
+    public void setGamblerID(int gamblerID) {
+        this.gamblerID = gamblerID;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public void setDraws(int draws) {
+        this.draws = draws;
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("gamblerID", gamblerID);
+        json.put("balance", balance);
+        json.put("wins", wins);
+        json.put("draws", draws);
+        json.put("losses", losses);
+        return json;
     }
 
 }
