@@ -174,6 +174,7 @@ public class Gambler extends Player {
         this.balance = balance;
     }
 
+    // EFFECTS: creates a json object from gambler data
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("gamblerID", gamblerID);

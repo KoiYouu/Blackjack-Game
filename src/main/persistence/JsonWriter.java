@@ -43,8 +43,4 @@ public class JsonWriter {
         writer.print(json);
     }
 
-    // EFFECTS: returns the writers save destination
-    public String getDestination() {
-        return destination;
-    }
 }

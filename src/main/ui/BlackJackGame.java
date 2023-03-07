@@ -35,7 +35,8 @@ public class BlackJackGame {
     // EFFECTS: Starts up the game of blackjack, creates as many players as the user specifies with each
     // player getting the specified balance. Displays the menu options to quit or play, if neither option is chosen
     // a message will appear telling the user to pick a given option. if quit is selected game exits, if play is
-    // selected the game starts, with bets being collected and the game playing out.
+    // selected the game starts, with bets being collected and the game playing out. Also has the option to save
+    // current data such as wins, losses, draws, balance, and playerID. Can load from a previous save.
     public void startGame() {
         preGameSetUp();
         while (!gameOver) {

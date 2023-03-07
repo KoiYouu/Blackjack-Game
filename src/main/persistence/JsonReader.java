@@ -20,7 +20,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads gambler data from file and returns it;
     // throws IOException if an error occurs reading data from file
     public ListOfGamblers read() throws IOException {
         String jsonData = readFile(source);
@@ -47,7 +47,7 @@ public class JsonReader {
     }
 
     // MODIFIES: gamblers
-    // EFFECTS: parses thingies from JSON object and adds them to listOfGamblers
+    // EFFECTS: parses gamblers from JSON object and adds them to listOfGamblers
     private void addGamblers(ListOfGamblers gamblers, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("gambler");
         for (Object json : jsonArray) {
@@ -57,7 +57,7 @@ public class JsonReader {
     }
 
     // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // EFFECTS: parses gambler from JSON object and adds it to gamblers
     private void addGambler(ListOfGamblers gamblers, JSONObject jsonObject) {
         int gamblerID = jsonObject.getInt("gamblerID");
         int balance = jsonObject.getInt("balance");
