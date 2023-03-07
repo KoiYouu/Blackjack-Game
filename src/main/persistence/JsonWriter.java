@@ -42,4 +42,9 @@ public class JsonWriter {
     private void saveToFile(String json) {
         writer.print(json);
     }
+
+    // EFFECTS: returns the writers save destination
+    public String getDestination() {
+        return destination;
+    }
 }

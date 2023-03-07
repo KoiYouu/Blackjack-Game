@@ -17,7 +17,7 @@ public class GamblerTest extends PlayerTest {
 
     @Test
     void testConstructor() {
-        assertEquals(41, gambler.getGamblerID());
+        assertEquals(49, gambler.getGamblerID());
         assertEquals(1000, gambler.getBalance());
         assertEquals(0, gambler.getWins());
         assertEquals(0, gambler.getDraws());

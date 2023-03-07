@@ -69,3 +69,9 @@ or just exit the program
 
 - As a user, I want to be able to load my progress that I had saved
 or start a game new.
+
+## Citation
+
+A large part of the saving and loading of game data to and from a json file was adapted from
+the CPSC 210 team, big thank you to them. This includes the tests and some methods. 
+You can find their code here at https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
