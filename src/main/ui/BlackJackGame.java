@@ -3,7 +3,7 @@ package ui;
 import model.Dealer;
 import model.Gambler;
 import model.ListOfGamblers;
-import persistance.JsonReader;
+import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;

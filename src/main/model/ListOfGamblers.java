@@ -19,10 +19,6 @@ public class ListOfGamblers {
         }
     }
 
-    public ListOfGamblers(ArrayList<Gambler> gamblers) {
-        this.gamblers = gamblers;
-    }
-
     public ArrayList<Gambler> getGamblers() {
         return gamblers;
     }

@@ -144,20 +144,34 @@ public class Gambler extends Player {
         return bet;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets gamblerID to given ID
     public void setGamblerID(int gamblerID) {
         this.gamblerID = gamblerID;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets wins to given wins
     public void setWins(int wins) {
         this.wins = wins;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets losses to given losses
     public void setLosses(int losses) {
         this.losses = losses;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets draws to given draws
     public void setDraws(int draws) {
         this.draws = draws;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets balance to given balance
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
     public JSONObject toJson() {

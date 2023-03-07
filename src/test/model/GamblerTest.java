@@ -17,7 +17,7 @@ public class GamblerTest extends PlayerTest {
 
     @Test
     void testConstructor() {
-        assertEquals(39, gambler.getGamblerID());
+        assertEquals(41, gambler.getGamblerID());
         assertEquals(1000, gambler.getBalance());
         assertEquals(0, gambler.getWins());
         assertEquals(0, gambler.getDraws());
@@ -136,5 +136,16 @@ public class GamblerTest extends PlayerTest {
         assertFalse(gambler.isStand());
         assertEquals(0, gambler.getBet());
         assertEquals(950, gambler.getBalance());
+    }
+
+    @Test
+    void testToJson() {
+        gambler.setDraws(420);
+        gambler.setWins(69);
+        gambler.setLosses(21);
+        gambler.setGamblerID(1);
+        String jsonObject = gambler.toJson().toString();
+        assertEquals("{\"wins\":69,\"balance\":1000,\"draws\":420,\"gamblerID\":1,\"losses\":21}"
+                , jsonObject);
     }
 }
