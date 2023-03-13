@@ -25,7 +25,7 @@ public class JsonReader {
     public ListOfGamblers read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseWorkRoom(jsonObject);
+        return parseListOfGamblers(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -40,7 +40,7 @@ public class JsonReader {
     }
 
     // EFFECTS: parses listOfGamblers from JSON object and returns it
-    private ListOfGamblers parseWorkRoom(JSONObject jsonObject) {
+    private ListOfGamblers parseListOfGamblers(JSONObject jsonObject) {
         ListOfGamblers gamblers = new ListOfGamblers(0,0);
         addGamblers(gamblers, jsonObject);
         return gamblers;
