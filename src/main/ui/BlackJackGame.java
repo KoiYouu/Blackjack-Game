@@ -36,29 +36,14 @@ public class BlackJackGame {
     // player getting the specified balance. Displays the menu options to quit or play, if neither option is chosen
     // a message will appear telling the user to pick a given option. if quit is selected game exits, if play is
     // selected the game starts, with bets being collected and the game playing out. Also has the option to save
-    // current data such as wins, losses, draws, balance, and playerID. Can load from a previous save.
+    // current data such as wins, losses, draws, balance, and playerID. Can load from a previous save. Also
+    // checks for a valid player state, not letting the game start unless all the players have a positive balance
     public void startGame() {
         preGameSetUp();
         while (!gameOver) {
             displayMenuOptions();
             String input = userInput.next().toLowerCase();
-            if (input.equals("q")) {
-                gameOver = true;
-            } else if (input.equals("p")) {
-                play();
-            } else if (input.equals("b")) {
-                addBalanceToPlayer();
-            } else if (input.equals("n")) {
-                addPlayer();
-            } else if (input.equals("v")) {
-                viewScoreBoard();
-            } else if (input.equals("s")) {
-                saveGameData();
-            } else if (input.equals("l")) {
-                loadGameData();
-            } else {
-                System.out.println("Please choose from given options.");
-            }
+            processCommand(input);
         }
         System.out.println("See you next time!");
     }
@@ -71,6 +56,52 @@ public class BlackJackGame {
         playGame();
         payOut();
         resetDealer();
+    }
+
+    // EFFECTS: checks if players are valid to start the game by seeing if they have a positive balance
+    public void playersValidToStart() {
+        for (Gambler gambler: listOfGamblers.getGamblers()) {
+            if (gambler.getBalance() <= 0) {
+                System.out.println("Player " + gambler.getGamblerID() + " doesn't have enough balance,"
+                        + " please add money to the player");
+                System.out.println("Specify how much money to add");
+                int moneyToAdd = 0;
+                while (moneyToAdd < 1) {
+                    moneyToAdd = userInput.nextInt();
+                    if (moneyToAdd < 1) {
+                        System.out.println("Please enter a valid number");
+                    }
+                }
+                System.out.println("Adding $" + moneyToAdd);
+                listOfGamblers.getGamblers(gambler.getGamblerID() - 1).addBalance(moneyToAdd);
+                System.out.println("Player " + listOfGamblers.getGamblers(gambler.getGamblerID() - 1).getGamblerID()
+                        + " has received $" + moneyToAdd + " and their new balance is $"
+                        + listOfGamblers.getGamblers(gambler.getGamblerID() - 1).getBalance());
+            }
+        }
+    }
+
+    // MODIFIES: dealer, player, this
+    // EFFECTS: processes the players command
+    public void processCommand(String input) {
+        if (input.equals("q")) {
+            gameOver = true;
+        } else if (input.equals("p")) {
+            playersValidToStart();
+            play();
+        } else if (input.equals("b")) {
+            addBalanceToPlayer();
+        } else if (input.equals("n")) {
+            addPlayer();
+        } else if (input.equals("v")) {
+            viewScoreBoard();
+        } else if (input.equals("s")) {
+            saveGameData();
+        } else if (input.equals("l")) {
+            loadGameData();
+        } else {
+            System.out.println("Please choose from given options.");
+        }
     }
 
     // MODIFIES: dealer
@@ -256,8 +287,13 @@ public class BlackJackGame {
     // and displays all the players current cards
     // gives a message if the hit busts the player
     public void playerDouble(Gambler gambler) {
-        gambler.gamblerDouble();
-        System.out.println("Double!");
+        if (gambler.getBalance() < gambler.getBet()) {
+            System.out.println("Not enough money to double, regular hit instead!");
+            gambler.hitCard();
+        } else {
+            gambler.gamblerDouble();
+            System.out.println("Double!");
+        }
         if ((gambler.checkAceInHand() && gambler.handValueHard() < 12)) {
             System.out.println("Cards: " + gambler.getAllCards()  + "Hand total: " + gambler.handValueHard()
                     + "/" + gambler.handValueSoft());
