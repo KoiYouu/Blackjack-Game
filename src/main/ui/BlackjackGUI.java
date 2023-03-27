@@ -1,8 +1,15 @@
 package ui;
 
-import javax.swing.*;
+import model.Dealer;
+import model.ListOfGamblers;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
-public class BlackjackGUI {
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.Scanner;
+
+public class BlackjackGUI extends JPanel {
     private JPanel guiCardLayout;
     private JTextField startingMoneyTextField;
     private JLabel welcomeText;
@@ -36,4 +43,58 @@ public class BlackjackGUI {
     private JPanel scoreboardBalanceJPanel;
     private JPanel scoreboardWinsJPanel;
     private JLabel scoreboardLabel;
+    private JPanel numPlayerJPanel;
+    private JPanel startingMoneyJPanel;
+    private JLabel numPlayerLabel;
+    private JLabel startingMoneyLabel;
+
+
+    private Dealer dealer;
+    private ListOfGamblers listOfGamblers;
+    private static final String SAVELOCATION = "./data/BlackJackGame.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
+    private static final int xSize = 1280;
+    private static final int ySize = 720;
+
+    @SuppressWarnings("methodlength")
+    public BlackjackGUI() {
+        welcomeMenuNextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listOfGamblers = new ListOfGamblers(numPlayerSelectBox.getSelectedIndex() + 1,
+                        Integer.parseInt(startingMoneyTextField.getText()));
+                guiCardLayout.removeAll();
+                guiCardLayout.add(gameMenuCardLayout);
+                guiCardLayout.repaint();
+                guiCardLayout.revalidate();
+            }
+        });
+        startingMoneyTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+        });
+        numPlayerSelectBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("BlackjackGUI");
+        frame.setContentPane(new BlackjackGUI().guiCardLayout);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
 }
