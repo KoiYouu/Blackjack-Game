@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ui.BlackjackGUI">
+  <grid id="27dc6" binding="guiCardLayout" layout-manager="CardLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="664" height="509"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="680f2" binding="welcomeJPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <card name="Card1"/>
+        </constraints>
+        <properties>
+          <background color="-13734077"/>
+          <enabled value="true"/>
+          <foreground color="-1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="66bb8" class="javax.swing.JComboBox" binding="numPlayerSelectBox">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
+              <model>
+                <item value="&#9;1"/>
+                <item value="&#9;2"/>
+                <item value="&#9;3"/>
+              </model>
+            </properties>
+          </component>
+          <component id="f04a4" class="javax.swing.JTextField" binding="startingMoneyTextField">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
+              <selectedTextColor color="-16777216"/>
+              <text value="enter a number (eg. 1, 100, 6969)"/>
+            </properties>
+          </component>
+          <component id="70f83" class="javax.swing.JLabel" binding="welcomeText">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="600" height="400"/>
+              </grid>
+            </constraints>
+            <properties>
+              <enabled value="true"/>
+              <foreground color="-1"/>
+              <text value="Welcome to Blackjack!&#10;&#10;Please select how many players are playing and the starting balance for all players"/>
+            </properties>
+          </component>
+          <component id="6911e" class="javax.swing.JButton" binding="welcomeMenuNextButton">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <actionCommand value="welcomeMenuNextButton"/>
+              <autoscrolls value="false"/>
+              <background color="-1"/>
+              <foreground color="-16777216"/>
+              <hideActionText value="false"/>
+              <label value="Next"/>
+              <text value="Next"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="15725" binding="gameMenuCardLayout" layout-manager="CardLayout" hgap="0" vgap="0">
+        <constraints>
+          <card name="Card2"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="89930" binding="gameMainMenuJPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <card name="Card1"/>
+            </constraints>
+            <properties>
+              <background color="-13734077"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <grid id="2797a" binding="textDisplayJPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-13734077"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="94e18" class="javax.swing.JLabel" binding="blackJackDisplayLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <text value="Blackjack"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="6770d" binding="menuTopRowButtonJPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-13734077"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="2e9ba" class="javax.swing.JButton" binding="playButton">
+                    <constraints/>
+                    <properties>
+                      <background color="-1"/>
+                      <foreground color="-16777216"/>
+                      <text value="Play"/>
+                    </properties>
+                  </component>
+                  <component id="ae77a" class="javax.swing.JButton" binding="viewScoreboardButton">
+                    <constraints/>
+                    <properties>
+                      <background color="-1"/>
+                      <foreground color="-16777216"/>
+                      <label value="View Scoreboard"/>
+                      <text value="View Scoreboard"/>
+                    </properties>
+                  </component>
+                  <component id="34dd8" class="javax.swing.JButton" binding="addBalanceButton">
+                    <constraints/>
+                    <properties>
+                      <background color="-1"/>
+                      <foreground color="-16777216"/>
+                      <text value="Add Balance"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="94c35" binding="menuBottomRowButtonJPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-13734077"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="f955e" class="javax.swing.JButton" binding="addPlayerButton" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <actionCommand value="addPlayerButton"/>
+                      <background color="-1"/>
+                      <foreground color="-16777216"/>
+                      <text value="Add Player"/>
+                    </properties>
+                  </component>
+                  <component id="3bd84" class="javax.swing.JButton" binding="saveGameButton" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <actionCommand value="saveButton"/>
+                      <background color="-1"/>
+                      <foreground color="-16777216"/>
+                      <text value="Save Game"/>
+                    </properties>
+                  </component>
+                  <component id="bb661" class="javax.swing.JButton" binding="loadSGameButton" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <actionCommand value="loadButton"/>
+                      <background color="-1"/>
+                      <foreground color="-16777216"/>
+                      <label value="Load Game"/>
+                      <text value="Load Game"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </grid>
+          <grid id="26355" binding="gameplayJPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <card name="Card2"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="d1132" binding="scoreboardJPanel" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <card name="Card3"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="94145" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
+            </children>
+          </grid>
+          <grid id="aa7d4" binding="addPlayerJPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <card name="Card4"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="72337" binding="addBalanceJPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <card name="Card5"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
