@@ -25,4 +25,15 @@ public class BlackjackGUI {
     private JPanel scoreboardJPanel;
     private JPanel addPlayerJPanel;
     private JPanel addBalanceJPanel;
+    private JLabel scoreboardPlayerLabel;
+    private JLabel scoreboardWinLabel;
+    private JLabel scoreboardLossesLabel;
+    private JLabel scoreboardDrawsLabel;
+    private JLabel scoreboardBalanceLabel;
+    private JPanel scoreboardPlayerJPanel;
+    private JPanel scoreboardLossesJPanel;
+    private JPanel scoreboardDrawsJPanel;
+    private JPanel scoreboardBalanceJPanel;
+    private JPanel scoreboardWinsJPanel;
+    private JLabel scoreboardLabel;
 }
