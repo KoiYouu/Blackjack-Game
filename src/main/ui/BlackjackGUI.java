@@ -375,13 +375,13 @@ public class BlackjackGUI extends JPanel {
         int count = 0;
         for (Gambler gambler: listOfGamblers.getGamblers()) {
             if (count == 0) {
-                topLeftPlayersLabel.setText("Player " + gambler.getGamblerID() + "\'s Cards:");
+                topLeftPlayersLabel.setText("Player " + gambler.getGamblerID() + "'s Cards:");
             } else if (count == 1) {
-                bottomLeftPlayersLabel.setText("Player " + gambler.getGamblerID() + "\'s Cards:");
+                bottomLeftPlayersLabel.setText("Player " + gambler.getGamblerID() + "'s Cards:");
             } else if (count == 2) {
-                topRightPlayersLabel.setText("Player " + gambler.getGamblerID() + "\'s Cards:");
+                topRightPlayersLabel.setText("Player " + gambler.getGamblerID() + "'s Cards:");
             } else if (count == 3) {
-                bottomRightPlayersLabel.setText("Player " + gambler.getGamblerID() + "\'s Cards:");
+                bottomRightPlayersLabel.setText("Player " + gambler.getGamblerID() + "'s Cards:");
             }
             count++;
         }
@@ -404,7 +404,8 @@ public class BlackjackGUI extends JPanel {
     }
 
     //TODO MAKE IT ONLY COLLECT VALID BETS
-    // EFFECTS: collects bets from all gamblers
+    // MODIFIES: gambler, listOfGambler
+    // EFFECTS: collects bets from all gamblers and sets their bets
     public void collectBets() {
         for (Gambler gambler: listOfGamblers.getGamblers()) {
             int bet = Integer.parseInt(JOptionPane.showInputDialog("Player" + gambler.getGamblerID()
@@ -419,9 +420,9 @@ public class BlackjackGUI extends JPanel {
         JFrame frame = new JFrame("BlackjackGUI");
         frame.setContentPane(new BlackjackGUI().guiCardLayout);
         frame.setIconImage(image.getImage());
-        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(xSize,ySize);
+        frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.setVisible(true);
 
