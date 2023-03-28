@@ -232,10 +232,10 @@ public class BlackJackGame {
     }
 
     // REQUIRES: non-null player object, double to be inputted only if player has enough money
-    // MODIFIES: player
-    // EFFECTS: gets the players input for what to do during their turn and acts accordingly,
-    // h for hit, s for stand, d for double, stops allowing user to interact once card total reaches > 21
-    // or they stand.
+        // MODIFIES: player
+        // EFFECTS: gets the players input for what to do during their turn and acts accordingly,
+        // h for hit, s for stand, d for double, stops allowing user to interact once card total reaches > 21
+        // or they stand.
     public void playersTurn(Gambler gambler) {
         System.out.println("Player " + gambler.getGamblerID() + "\'s turn:");
         System.out.println("Dealers cards: " + dealer.getDealersCards() + " Hand total: "

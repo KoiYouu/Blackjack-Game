@@ -1,5 +1,6 @@
 package ui;
 
+import model.Cards;
 import model.Dealer;
 import model.Gambler;
 import model.ListOfGamblers;
@@ -105,12 +106,15 @@ public class BlackjackGUI extends JPanel {
     private static final int xSize = 640;
     private static final int ySize = 480;
     private static final ImageIcon image = new ImageIcon("./data/featureDriver.png");
+    private static final ImageIcon frontCard = new ImageIcon("./data/frontCard.png");
+    private static final ImageIcon backCard = new ImageIcon("./data/backCard.png");
 
     @SuppressWarnings("methodlength")
     public BlackjackGUI() {
         welcomeMenuNextButton.addActionListener(new ActionListener() {
             @Override // welcome screen next button handler
             public void actionPerformed(ActionEvent e) {
+                dealer = new Dealer();
                 listOfGamblers = new ListOfGamblers(numPlayerSelectBox.getSelectedIndex() + 1,
                         Integer.parseInt(startingMoneyTextField.getText()));
                 jsonWriter = new JsonWriter(SAVELOCATION);
@@ -214,7 +218,7 @@ public class BlackjackGUI extends JPanel {
                 guiCardLayout.add(addBalanceJPanel);
                 guiCardLayout.repaint();
                 guiCardLayout.revalidate();
-                addBalanceSelectPlayerComboBox.setModel(new DefaultComboBoxModel<String>(comboBoxValues));
+                addBalanceSelectPlayerComboBox.setModel(new DefaultComboBoxModel<>(comboBoxValues));
             }
         });
 
@@ -242,7 +246,8 @@ public class BlackjackGUI extends JPanel {
             }
         });
         playButton.addActionListener(new ActionListener() {
-            @Override
+            @Override   // button handler to move from menu to playing, collects players bets, ensures every player
+                        // is valid to start, and does the pregame setup for cards
             public void actionPerformed(ActionEvent e) {
                 playersValidToStart();
                 collectBets();
@@ -250,7 +255,9 @@ public class BlackjackGUI extends JPanel {
                 guiCardLayout.add(gameplayJPanel);
                 guiCardLayout.repaint();
                 guiCardLayout.revalidate();
-
+                setScene();
+                startGame();
+                displayCards();
             }
         });
     }
@@ -320,9 +327,80 @@ public class BlackjackGUI extends JPanel {
                 guiCardLayout.add(addBalanceJPanel);
                 guiCardLayout.repaint();
                 guiCardLayout.revalidate();
-                addBalanceSelectPlayerComboBox.setModel(new DefaultComboBoxModel<String>(comboBoxValues));
+                addBalanceSelectPlayerComboBox.setModel(new DefaultComboBoxModel<>(comboBoxValues));
             }
         }
+    }
+
+    @SuppressWarnings("methodlength")
+    // MODIFIES: this
+    // EFFECTS: displays each player and dealers cards by creating new JLabels for each of them and
+    // adding them to the correct panel location and updates the players total hand total
+    public void displayCards() {
+        int count = 0;
+        for (Cards card: dealer.getHand()) {
+            if (card.getFacingUp()) {
+                String cardName = card.getCardName();
+                String suit = card.getSuit();
+                JLabel temp = new JLabel(cardName + "  " + suit, frontCard, JLabel.CENTER);
+                temp.setHorizontalTextPosition(JLabel.CENTER);
+                dealersCardsJPanel.add(temp);
+            } else {
+                dealersCardsJPanel.add(new JLabel(backCard, JLabel.CENTER));
+            }
+        }
+        for (Gambler gambler: listOfGamblers.getGamblers()) {
+            for (Cards card: gambler.getHand()) {
+                String cardName = card.getCardName();
+                String suit = card.getSuit();
+                JLabel temp = new JLabel(cardName + "  " + suit, frontCard, JLabel.CENTER);
+                temp.setHorizontalTextPosition(JLabel.CENTER);
+                if (count == 0) {
+                    topLeftPlayersCardsJPanel.add(temp);
+                } else if (count == 1) {
+                    bottomLeftPlayersCardsJPanel.add(temp);
+                } else if (count == 2) {
+                    topRightPlayersCardsJPanel.add(temp);
+                } else {
+                    bottomRightPlayersCardsJPanel.add(temp);
+                }
+            }
+            count++;
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: properly renames each player section
+    public void setScene() {
+        int count = 0;
+        for (Gambler gambler: listOfGamblers.getGamblers()) {
+            if (count == 0) {
+                topLeftPlayersLabel.setText("Player " + gambler.getGamblerID() + "\'s Cards:");
+            } else if (count == 1) {
+                bottomLeftPlayersLabel.setText("Player " + gambler.getGamblerID() + "\'s Cards:");
+            } else if (count == 2) {
+                topRightPlayersLabel.setText("Player " + gambler.getGamblerID() + "\'s Cards:");
+            } else if (count == 3) {
+                bottomRightPlayersLabel.setText("Player " + gambler.getGamblerID() + "\'s Cards:");
+            }
+            count++;
+        }
+    }
+
+    // MODIFIES: dealer, player
+    // EFFECTS: starts the game of blackjack off by giving the deal 2 cards, 1 face up and another face down, then
+    // gives every player 2 cards and displays the current state of the game.
+    public void startGame() {
+        System.out.println("Dealers turn!\n");
+        dealer.startingDealerTurn();
+        System.out.println("Dealer draws: " + dealer.getDealersCards()  + " Hand total: "
+                + dealer.getHand().get(0).getValue() + "\n");
+        System.out.println("Now drawing 2 cards for each player:\n");
+        for (int i = 0; i < listOfGamblers.getGamblers().size(); i++) {
+            listOfGamblers.getGamblers(i).hitCard();
+            listOfGamblers.getGamblers(i).hitCard();
+        }
+        System.out.println(listOfGamblers.getAllGamblersCards());
     }
 
     //TODO MAKE IT ONLY COLLECT VALID BETS

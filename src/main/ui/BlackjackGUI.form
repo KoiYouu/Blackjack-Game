@@ -291,13 +291,13 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <component id="97875" class="javax.swing.JLabel" binding="bottomRightPlayersLabel">
+                          <component id="97875" class="javax.swing.JLabel" binding="bottomLeftPlayersLabel">
                             <constraints>
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <foreground color="-1"/>
-                              <text value="Players Cards:"/>
+                              <text value="NO PLAYER HERE"/>
                             </properties>
                           </component>
                           <component id="91d1d" class="javax.swing.JLabel">
@@ -306,7 +306,7 @@
                             </constraints>
                             <properties>
                               <foreground color="-1"/>
-                              <text value="Card Total: "/>
+                              <text value="Hand Total:"/>
                             </properties>
                           </component>
                           <component id="57f35" class="javax.swing.JLabel" binding="bottomLeftPlayersCardTotalLabel">
@@ -362,7 +362,7 @@
                             </constraints>
                             <properties>
                               <foreground color="-1"/>
-                              <text value="Players Cards:"/>
+                              <text value="NO PLAYER HERE"/>
                             </properties>
                           </component>
                           <component id="b9a46" class="javax.swing.JLabel">
@@ -371,7 +371,7 @@
                             </constraints>
                             <properties>
                               <foreground color="-1"/>
-                              <text value="Card Total: "/>
+                              <text value="Hand Total:"/>
                             </properties>
                           </component>
                           <component id="7fe5b" class="javax.swing.JLabel" binding="topRightPlayersCardTotalLabel">
@@ -423,7 +423,7 @@
                             </constraints>
                             <properties>
                               <foreground color="-1"/>
-                              <text value="Players Cards:"/>
+                              <text value="NO PLAYER HERE"/>
                             </properties>
                           </component>
                           <component id="faaba" class="javax.swing.JLabel">
@@ -432,7 +432,7 @@
                             </constraints>
                             <properties>
                               <foreground color="-1"/>
-                              <text value="Card Total: "/>
+                              <text value="Hand Total:"/>
                             </properties>
                           </component>
                           <component id="7d9ae" class="javax.swing.JLabel" binding="topLeftPlayersCardTotalLabel">
@@ -478,13 +478,13 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <component id="5d211" class="javax.swing.JLabel" binding="bottomLeftPlayersLabel">
+                          <component id="5d211" class="javax.swing.JLabel" binding="bottomRightPlayersLabel">
                             <constraints>
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <foreground color="-1"/>
-                              <text value="Players Cards:"/>
+                              <text value="NO PLAYER HERE"/>
                             </properties>
                           </component>
                           <component id="b8227" class="javax.swing.JLabel">
@@ -493,7 +493,7 @@
                             </constraints>
                             <properties>
                               <foreground color="-1"/>
-                              <text value="Card Total: "/>
+                              <text value="Hand Total:"/>
                             </properties>
                           </component>
                           <component id="49a10" class="javax.swing.JLabel" binding="bottomRightPlayersCardTotalLabel">
@@ -622,7 +622,7 @@
                             <properties>
                               <background color="-13734077"/>
                               <foreground color="-1"/>
-                              <text value="Card Total: "/>
+                              <text value="Hand Total:"/>
                             </properties>
                           </component>
                           <component id="d06cb" class="javax.swing.JLabel" binding="dealerCardTotalLabel">
