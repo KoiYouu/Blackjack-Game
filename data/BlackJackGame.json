@@ -1,7 +1,30 @@
-{"gambler": [{
-    "wins": 0,
-    "balance": 123,
-    "draws": 0,
-    "gamblerID": 1,
-    "losses": 0
-}]}
+{"gambler": [
+    {
+        "wins": 0,
+        "balance": 686,
+        "draws": 0,
+        "gamblerID": 1,
+        "losses": 0
+    },
+    {
+        "wins": 0,
+        "balance": 123,
+        "draws": 0,
+        "gamblerID": 2,
+        "losses": 0
+    },
+    {
+        "wins": 0,
+        "balance": 669,
+        "draws": 0,
+        "gamblerID": 3,
+        "losses": 0
+    },
+    {
+        "wins": 0,
+        "balance": 9090,
+        "draws": 0,
+        "gamblerID": 4,
+        "losses": 0
+    }
+]}

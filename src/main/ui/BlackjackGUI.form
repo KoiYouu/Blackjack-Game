@@ -57,7 +57,9 @@
             <children>
               <component id="66bb8" class="javax.swing.JComboBox" binding="numPlayerSelectBox">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                    <preferred-size width="200" height="40"/>
+                  </grid>
                 </constraints>
                 <properties>
                   <background color="-1"/>
@@ -93,7 +95,9 @@
             <children>
               <component id="f04a4" class="javax.swing.JTextField" binding="startingMoneyTextField">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                    <minimum-size width="200" height="40"/>
+                  </grid>
                 </constraints>
                 <properties>
                   <background color="-1"/>
@@ -361,23 +365,179 @@
               </component>
             </children>
           </grid>
-          <grid id="aa7d4" binding="addPlayerJPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="aa7d4" binding="addPlayerJPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <card name="Card4"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-13734077"/>
+            </properties>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="14d41" class="javax.swing.JLabel" binding="addPlayerLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-1"/>
+                  <text value="Add Player"/>
+                </properties>
+              </component>
+              <grid id="be34e" binding="addPlayerBalanceJPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-13734077"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="2e110" class="javax.swing.JTextField" binding="startingBalanceAddPlayerJPanel">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="200" height="40"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <background color="-1"/>
+                      <foreground color="-16777216"/>
+                      <selectedTextColor color="-16777216"/>
+                      <text value=""/>
+                      <toolTipText value="enter a number (eg. 1, 100, 6969)"/>
+                    </properties>
+                  </component>
+                  <component id="d961b" class="javax.swing.JLabel" binding="addPlayerHelpLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="10"/>
+                      <text value="enter a number for their starting balance (eg. 1, 100, 6969)"/>
+                    </properties>
+                  </component>
+                  <component id="12d1b" class="javax.swing.JButton" binding="addPlayerConfirmButton">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-1"/>
+                      <foreground color="-16777216"/>
+                      <text value="Add Player"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
           </grid>
-          <grid id="72337" binding="addBalanceJPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="72337" binding="addBalanceJPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <card name="Card5"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-13734077"/>
+            </properties>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="3bcc" class="javax.swing.JLabel" binding="addBalanceLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="true"/>
+                  <foreground color="-1"/>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="11"/>
+                  <text value="Add Balance"/>
+                </properties>
+              </component>
+              <component id="7ef9c" class="javax.swing.JButton" binding="addBalanceConfirmButton">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <actionCommand value="welcomeMenuNextButton"/>
+                  <autoscrolls value="false"/>
+                  <background color="-1"/>
+                  <foreground color="-16777216"/>
+                  <hideActionText value="false"/>
+                  <label value="Confirm"/>
+                  <text value="Confirm"/>
+                </properties>
+              </component>
+              <grid id="81e76" binding="addBalanceSelectPlayerJPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-13734077"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="4d658" class="javax.swing.JComboBox" binding="addBalanceSelectPlayerComboBox">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                        <preferred-size width="200" height="40"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <background color="-1"/>
+                      <foreground color="-16777216"/>
+                      <model/>
+                    </properties>
+                  </component>
+                  <component id="e45ce" class="javax.swing.JLabel" binding="addBalanceSelectPlayerLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <text value="asdasdasd"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="97247" binding="addBalanceWriteBalanceJPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-13734077"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="d264e" class="javax.swing.JTextField" binding="addBalanceTextField">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                        <minimum-size width="200" height="40"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <background color="-1"/>
+                      <foreground color="-16777216"/>
+                      <selectedTextColor color="-16777216"/>
+                      <text value=""/>
+                      <toolTipText value="enter a number (eg. 1, 100, 6969)"/>
+                    </properties>
+                  </component>
+                  <component id="a5d82" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="10"/>
+                      <text value="enter the additional balance you wish to add (eg. 1, 100, 6969)"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
           </grid>
         </children>
       </grid>
