@@ -61,6 +61,7 @@ public class BlackjackGUI extends JPanel {
 
     private static final int xSize = 1280;
     private static final int ySize = 720;
+    private static final ImageIcon image = new ImageIcon("./data/featureDriver.png");
 
     @SuppressWarnings("methodlength")
     public BlackjackGUI() {
@@ -92,7 +93,7 @@ public class BlackjackGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 saveGameData();
                 JOptionPane.showMessageDialog(null, "Saved game data to " + SAVELOCATION,
-                        "Saved Successfully", JOptionPane.INFORMATION_MESSAGE);
+                        "Saved Successfully", JOptionPane.INFORMATION_MESSAGE, image);
             }
         });
         loadSGameButton.addActionListener(new ActionListener() {
@@ -100,7 +101,7 @@ public class BlackjackGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 loadGameData();
                 JOptionPane.showMessageDialog(null, "Loaded game data from " + SAVELOCATION,
-                        "Loaded Successfully", JOptionPane.INFORMATION_MESSAGE);
+                        "Loaded Successfully", JOptionPane.INFORMATION_MESSAGE, image);
             }
         });
         viewScoreboardButton.addActionListener(new ActionListener() {
@@ -159,7 +160,7 @@ public class BlackjackGUI extends JPanel {
 
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Could not save",
-                    "Failed to save", JOptionPane.INFORMATION_MESSAGE);
+                    "Failed to save", JOptionPane.INFORMATION_MESSAGE, image);
         }
     }
 
@@ -171,13 +172,15 @@ public class BlackjackGUI extends JPanel {
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not load",
-                    "Failed to save", JOptionPane.INFORMATION_MESSAGE);
+                    "Failed to save", JOptionPane.INFORMATION_MESSAGE, image);
         }
     }
 
     public static void main(String[] args) {
+
         JFrame frame = new JFrame("BlackjackGUI");
         frame.setContentPane(new BlackjackGUI().guiCardLayout);
+        frame.setIconImage(image.getImage());
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
