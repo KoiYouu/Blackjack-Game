@@ -64,6 +64,36 @@ public class BlackjackGUI extends JPanel {
     private JPanel addBalanceWriteBalanceJPanel;
     private JComboBox addBalanceSelectPlayerComboBox;
     private JTextField addBalanceTextField;
+    private JPanel dealerJPanel;
+    private JLabel dealersLabel;
+    private JPanel playersJPanel;
+    private JPanel bottomLeftPlayersJPanel;
+    private JPanel topRightPlayersJPanel;
+    private JPanel topLeftPlayersJPanel;
+    private JPanel bottomRightPlayersJPanel;
+    private JPanel topLeftPlayersCardsJPanel;
+    private JPanel bottomRightPlayersCardsJPanel;
+    private JPanel bottomLeftPlayersCardsJPanel;
+    private JPanel topRightPlayersCardsJPanel;
+    private JPanel topLeftPlayersInfoJPanel;
+    private JLabel topLeftPlayersCardTotalLabel;
+    private JPanel bottomLeftPlayersInfoJPanel;
+    private JPanel bottomRightPlayersInfoJPanel;
+    private JPanel topRightPlayersInfoJPanel;
+    private JLabel topLeftPlayersLabel;
+    private JLabel topRightPlayersLabel;
+    private JLabel bottomRightPlayersLabel;
+    private JLabel bottomLeftPlayersLabel;
+    private JLabel topRightPlayersCardTotalLabel;
+    private JLabel bottomLeftPlayersCardTotalLabel;
+    private JLabel bottomRightPlayersCardTotalLabel;
+    private JLabel dealerCardTotalLabel;
+    private JPanel dealersCardsJPanel;
+    private JPanel playSectionJPanel;
+    private JButton hitButton;
+    private JButton doubleButton;
+    private JButton standButton;
+    private JPanel dealerInfoJPanel;
 
 
     private Dealer dealer;
@@ -189,7 +219,7 @@ public class BlackjackGUI extends JPanel {
         });
 
         addBalanceTextField.addKeyListener(new KeyAdapter() {
-            @Override
+            @Override // key handler to make sure that addBalance field is only numbers
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
                 char c = e.getKeyChar();
@@ -199,7 +229,7 @@ public class BlackjackGUI extends JPanel {
             }
         });
         addBalanceConfirmButton.addActionListener(new ActionListener() {
-            @Override
+            @Override // button handler to move from addBalance to menu, adds balance, and resets text box
             public void actionPerformed(ActionEvent e) {
                 listOfGamblers.getGamblers(
                         addBalanceSelectPlayerComboBox.getSelectedIndex()).addBalance(
@@ -209,6 +239,18 @@ public class BlackjackGUI extends JPanel {
                 guiCardLayout.add(gameMenuCardLayout);
                 guiCardLayout.repaint();
                 guiCardLayout.revalidate();
+            }
+        });
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                playersValidToStart();
+                collectBets();
+                guiCardLayout.removeAll();
+                guiCardLayout.add(gameplayJPanel);
+                guiCardLayout.repaint();
+                guiCardLayout.revalidate();
+
             }
         });
     }
@@ -260,6 +302,36 @@ public class BlackjackGUI extends JPanel {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not load",
                     "Failed to save", JOptionPane.INFORMATION_MESSAGE, image);
+        }
+    }
+
+    // EFFECTS: checks if players are valid to start the game by seeing if they have a positive balance
+    public void playersValidToStart() {
+        for (Gambler gambler: listOfGamblers.getGamblers()) {
+            if (gambler.getBalance() <= 0) {
+                JOptionPane.showMessageDialog(null, "Not enough balance on player" + gambler.getGamblerID()
+                        + "please add balance", "Not Enough Money", JOptionPane.INFORMATION_MESSAGE, image);
+                addBalanceSelectPlayerLabel.setText("Select Players 1 - " + listOfGamblers.getGamblers().size());
+                String[] comboBoxValues = new String[listOfGamblers.getGamblers().size()];
+                for (int i = 0; i < listOfGamblers.getGamblers().size(); i++) {
+                    comboBoxValues[i] = Integer.toString(listOfGamblers.getGamblers(i).getGamblerID());
+                }
+                guiCardLayout.removeAll();
+                guiCardLayout.add(addBalanceJPanel);
+                guiCardLayout.repaint();
+                guiCardLayout.revalidate();
+                addBalanceSelectPlayerComboBox.setModel(new DefaultComboBoxModel<String>(comboBoxValues));
+            }
+        }
+    }
+
+    //TODO MAKE IT ONLY COLLECT VALID BETS
+    // EFFECTS: collects bets from all gamblers
+    public void collectBets() {
+        for (Gambler gambler: listOfGamblers.getGamblers()) {
+            int bet = Integer.parseInt(JOptionPane.showInputDialog("Player" + gambler.getGamblerID()
+                    + "How much would you like to bet?"));
+            gambler.setBet(bet);
         }
     }
 
