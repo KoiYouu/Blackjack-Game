@@ -12,5 +12,19 @@
         "draws": 0,
         "gamblerID": 2,
         "losses": 0
+    },
+    {
+        "wins": 0,
+        "balance": 123123,
+        "draws": 0,
+        "gamblerID": 3,
+        "losses": 0
+    },
+    {
+        "wins": 0,
+        "balance": 12312,
+        "draws": 0,
+        "gamblerID": 4,
+        "losses": 0
     }
 ]}

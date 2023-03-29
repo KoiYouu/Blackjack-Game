@@ -7,10 +7,15 @@ import model.ListOfGamblers;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javax.sound.sampled.Clip;
 
 // GUI interface for blackjack game, handles some logic, and also where the game starts
 
@@ -95,6 +100,8 @@ public class BlackjackGUI extends JPanel {
     private JButton doubleButton;
     private JButton standButton;
     private JPanel dealerInfoJPanel;
+    private JLabel whichPlayersTurnLabel;
+    private JButton toggleMusic;
 
 
     private Dealer dealer;
@@ -102,15 +109,72 @@ public class BlackjackGUI extends JPanel {
     private static final String SAVELOCATION = "./data/BlackJackGame.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private int delay = 3000; // milliseconds
+    private Timer timer;
+    private static int playersTurn = 0;
+    private Clip clip;
 
-    private static final int xSize = 640;
-    private static final int ySize = 480;
+    private static final int xSize = 1280;
+    private static final int ySize = 720;
     private static final ImageIcon image = new ImageIcon("./data/featureDriver.png");
     private static final ImageIcon frontCard = new ImageIcon("./data/frontCard.png");
     private static final ImageIcon backCard = new ImageIcon("./data/backCard.png");
+    private static final String musicLocation = "./data/bangerMusic.wav";
 
-    @SuppressWarnings("methodlength")
     public BlackjackGUI() {
+        toggleMusic = new JButton("Mute");
+        menuBottomRowButtonJPanel.add(toggleMusic);
+        playMusic(musicLocation);
+
+        toggleMusicHandler();
+
+        welcomeMenuNextButtonHandler();
+        welcomeMenuStartingMoneyTextFieldKeyHandler();
+
+        saveGameButtonHandler();
+
+        loadGameButtonHandler();
+
+        viewScoreboardButtonHandler();
+        scoreboardBackToMenuButtonHandler();
+
+        startingBalanceAddPlayerKeyHandler();
+        addPlayerButtonHandler();
+        addPlayerConfirmButtonHandler();
+
+        addBalanceButtonHandler();
+        addBalanceTextFieldKeyHandler();
+        addBalanceConfirmButtonHandler();
+
+        playButtonHandler();
+    }
+
+    private void toggleMusicHandler() {
+        toggleMusic.addActionListener(e -> {
+            if (toggleMusic.getText().equals("Mute")) {
+                clip.stop();
+                toggleMusic.setText("Unmute");
+            } else {
+                clip.start();
+                toggleMusic.setText("Mute");
+            }
+        });
+    }
+
+    public void playMusic(String musicLocation) {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    new File(musicLocation).getAbsoluteFile());
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            System.out.println("Unexpected");
+        }
+    }
+
+    public void welcomeMenuNextButtonHandler() {
         welcomeMenuNextButton.addActionListener(new ActionListener() {
             @Override // welcome screen next button handler
             public void actionPerformed(ActionEvent e) {
@@ -119,109 +183,42 @@ public class BlackjackGUI extends JPanel {
                         Integer.parseInt(startingMoneyTextField.getText()));
                 jsonWriter = new JsonWriter(SAVELOCATION);
                 jsonReader = new JsonReader(SAVELOCATION);
-                guiCardLayout.removeAll();
-                guiCardLayout.add(gameMenuCardLayout);
-                guiCardLayout.repaint();
-                guiCardLayout.revalidate();
+                moveToMainMenu();
             }
         });
-        startingMoneyTextField.addKeyListener(new KeyAdapter() {
-            @Override // key handler for welcome screen to insure only numbers entered
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                char c = e.getKeyChar();
-                if (!Character.isDigit(c)) {
-                    e.consume();
-                }
-            }
-        });
-        saveGameButton.addActionListener(new ActionListener() {
-            @Override // saves game data and displays message
-            public void actionPerformed(ActionEvent e) {
-                saveGameData();
-                JOptionPane.showMessageDialog(null, "Saved game data to " + SAVELOCATION,
-                        "Saved Successfully", JOptionPane.INFORMATION_MESSAGE, image);
-            }
-        });
-        loadSGameButton.addActionListener(new ActionListener() {
-            @Override  // loads game data and displays message
-            public void actionPerformed(ActionEvent e) {
-                loadGameData();
-                JOptionPane.showMessageDialog(null, "Loaded game data from " + SAVELOCATION,
-                        "Loaded Successfully", JOptionPane.INFORMATION_MESSAGE, image);
-            }
-        });
-        viewScoreboardButton.addActionListener(new ActionListener() {
-            @Override  // button handler to move from menu to scoreboard
-            public void actionPerformed(ActionEvent e) {
-                guiCardLayout.removeAll();
-                guiCardLayout.add(scoreboardJPanel);
-                guiCardLayout.repaint();
-                guiCardLayout.revalidate();
-                addGamblerData();
-            }
-        });
-        scoreboardBackToMenuButton.addActionListener(new ActionListener() {
-            @Override // button handler to go from scoreboard back to menu
-            public void actionPerformed(ActionEvent e) {
-                guiCardLayout.removeAll();
-                guiCardLayout.add(gameMenuCardLayout);
-                guiCardLayout.repaint();
-                guiCardLayout.revalidate();
-            }
-        });
-        startingBalanceAddPlayerJPanel.addKeyListener(new KeyAdapter() {
-            @Override // key handler to ensure only numbers are entered in addPlayer starting balance
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                char c = e.getKeyChar();
-                if (!Character.isDigit(c)) {
-                    e.consume();
-                }
-            }
-        });
-        addPlayerButton.addActionListener(new ActionListener() {
-            @Override // button handler to move from menu to addPlayer menu only if players < 4
-            public void actionPerformed(ActionEvent e) {
-                if (listOfGamblers.getGamblers().size() >= 4) {
-                    JOptionPane.showMessageDialog(null, "Already 4 players, cannot add more",
-                            "Full Players", JOptionPane.INFORMATION_MESSAGE, image);
-                } else {
-                    guiCardLayout.removeAll();
-                    guiCardLayout.add(addPlayerJPanel);
-                    guiCardLayout.repaint();
-                    guiCardLayout.revalidate();
-                }
-            }
-        });
-        addPlayerConfirmButton.addActionListener(new ActionListener() {
-            @Override // button handler to move from addPlayer menu to menu and adds newly created player
-            public void actionPerformed(ActionEvent e) {
-                listOfGamblers.getGamblers().add(
-                        new Gambler(Integer.parseInt(startingBalanceAddPlayerJPanel.getText())));
-                startingBalanceAddPlayerJPanel.setText("");
-                guiCardLayout.removeAll();
-                guiCardLayout.add(gameMenuCardLayout);
-                guiCardLayout.repaint();
-                guiCardLayout.revalidate();
-            }
-        });
-        addBalanceButton.addActionListener(new ActionListener() {
-            @Override  // button handler to move from menu to addBalance menu and sets the ComboBox and text
-            public void actionPerformed(ActionEvent e) {
-                addBalanceSelectPlayerLabel.setText("Select Players 1 - " + listOfGamblers.getGamblers().size());
-                String[] comboBoxValues = new String[listOfGamblers.getGamblers().size()];
-                for (int i = 0; i < listOfGamblers.getGamblers().size(); i++) {
-                    comboBoxValues[i] = Integer.toString(listOfGamblers.getGamblers(i).getGamblerID());
-                }
-                guiCardLayout.removeAll();
-                guiCardLayout.add(addBalanceJPanel);
-                guiCardLayout.repaint();
-                guiCardLayout.revalidate();
-                addBalanceSelectPlayerComboBox.setModel(new DefaultComboBoxModel<>(comboBoxValues));
-            }
-        });
+    }
 
+    public void playButtonHandler() {
+        playButton.addActionListener(new ActionListener() {
+            @Override   // button handler to move from menu to playing, collects players bets, ensures every player
+                        // is valid to start, and does the pregame setup for cards
+            public void actionPerformed(ActionEvent e) {
+                playersValidToStart();
+                collectBets();
+                moveToPlay();
+                setScene();
+                preGameSetup();
+                displayCards();
+                playersTurn();
+
+            }
+        });
+    }
+
+    public void addBalanceConfirmButtonHandler() {
+        addBalanceConfirmButton.addActionListener(new ActionListener() {
+            @Override // button handler to move from addBalance to menu, adds balance, and resets text box
+            public void actionPerformed(ActionEvent e) {
+                listOfGamblers.getGamblers(
+                        addBalanceSelectPlayerComboBox.getSelectedIndex()).addBalance(
+                                Integer.parseInt(addBalanceTextField.getText()));
+                addBalanceTextField.setText("");
+                moveToMainMenu();
+            }
+        });
+    }
+
+    public void addBalanceTextFieldKeyHandler() {
         addBalanceTextField.addKeyListener(new KeyAdapter() {
             @Override // key handler to make sure that addBalance field is only numbers
             public void keyTyped(KeyEvent e) {
@@ -232,39 +229,229 @@ public class BlackjackGUI extends JPanel {
                 }
             }
         });
-        addBalanceConfirmButton.addActionListener(new ActionListener() {
-            @Override // button handler to move from addBalance to menu, adds balance, and resets text box
+    }
+
+    public void addBalanceButtonHandler() {
+        addBalanceButton.addActionListener(new ActionListener() {
+            @Override  // button handler to move from menu to addBalance menu and sets the ComboBox and text
             public void actionPerformed(ActionEvent e) {
-                listOfGamblers.getGamblers(
-                        addBalanceSelectPlayerComboBox.getSelectedIndex()).addBalance(
-                                Integer.parseInt(addBalanceTextField.getText()));
-                addBalanceTextField.setText("");
-                guiCardLayout.removeAll();
-                guiCardLayout.add(gameMenuCardLayout);
-                guiCardLayout.repaint();
-                guiCardLayout.revalidate();
-            }
-        });
-        playButton.addActionListener(new ActionListener() {
-            @Override   // button handler to move from menu to playing, collects players bets, ensures every player
-                        // is valid to start, and does the pregame setup for cards
-            public void actionPerformed(ActionEvent e) {
-                playersValidToStart();
-                collectBets();
-                guiCardLayout.removeAll();
-                guiCardLayout.add(gameplayJPanel);
-                guiCardLayout.repaint();
-                guiCardLayout.revalidate();
-                setScene();
-                startGame();
-                displayCards();
+                addBalanceSelectPlayerLabel.setText("Select Players 1 - " + listOfGamblers.getGamblers().size());
+                String[] comboBoxValues = new String[listOfGamblers.getGamblers().size()];
+                for (int i = 0; i < listOfGamblers.getGamblers().size(); i++) {
+                    comboBoxValues[i] = Integer.toString(listOfGamblers.getGamblers(i).getGamblerID());
+                }
+                moveToAddBalance();
+                addBalanceSelectPlayerComboBox.setModel(new DefaultComboBoxModel<>(comboBoxValues));
             }
         });
     }
 
+    public void addPlayerConfirmButtonHandler() {
+        addPlayerConfirmButton.addActionListener(new ActionListener() {
+            @Override // button handler to move from addPlayer menu to menu and adds newly created player
+            public void actionPerformed(ActionEvent e) {
+                listOfGamblers.getGamblers().add(
+                        new Gambler(Integer.parseInt(startingBalanceAddPlayerJPanel.getText())));
+                startingBalanceAddPlayerJPanel.setText("");
+                moveToMainMenu();
+            }
+        });
+    }
+
+    public void addPlayerButtonHandler() {
+        addPlayerButton.addActionListener(new ActionListener() {
+            @Override // button handler to move from menu to addPlayer menu only if players < 4
+            public void actionPerformed(ActionEvent e) {
+                if (listOfGamblers.getGamblers().size() >= 4) {
+                    JOptionPane.showMessageDialog(null, "Already 4 players, cannot add more",
+                            "Full Players", JOptionPane.INFORMATION_MESSAGE, image);
+                } else {
+                    moveToAddPlayer();
+                }
+            }
+        });
+    }
+
+    public void startingBalanceAddPlayerKeyHandler() {
+        startingBalanceAddPlayerJPanel.addKeyListener(new KeyAdapter() {
+            @Override // key handler to ensure only numbers are entered in addPlayer starting balance
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+        });
+    }
+
+    public void scoreboardBackToMenuButtonHandler() {
+        scoreboardBackToMenuButton.addActionListener(new ActionListener() {
+            @Override // button handler to go from scoreboard back to menu
+            public void actionPerformed(ActionEvent e) {
+                moveToMainMenu();
+            }
+        });
+    }
+
+    public void viewScoreboardButtonHandler() {
+        viewScoreboardButton.addActionListener(new ActionListener() {
+            @Override  // button handler to move from menu to scoreboard
+            public void actionPerformed(ActionEvent e) {
+                moveToScoreboard();
+                addGamblerData();
+            }
+        });
+    }
+
+    public void loadGameButtonHandler() {
+        loadSGameButton.addActionListener(new ActionListener() {
+            @Override  // loads game data and displays message
+            public void actionPerformed(ActionEvent e) {
+                loadGameData();
+                JOptionPane.showMessageDialog(null, "Loaded game data from " + SAVELOCATION,
+                        "Loaded Successfully", JOptionPane.INFORMATION_MESSAGE, image);
+            }
+        });
+    }
+
+    public void saveGameButtonHandler() {
+        saveGameButton.addActionListener(new ActionListener() {
+            @Override // saves game data and displays message
+            public void actionPerformed(ActionEvent e) {
+                saveGameData();
+                JOptionPane.showMessageDialog(null, "Saved game data to " + SAVELOCATION,
+                        "Saved Successfully", JOptionPane.INFORMATION_MESSAGE, image);
+            }
+        });
+    }
+
+    public void welcomeMenuStartingMoneyTextFieldKeyHandler() {
+        startingMoneyTextField.addKeyListener(new KeyAdapter() {
+            @Override // key handler for welcome screen to insure only numbers entered
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+        });
+    }
+
+    private void hitButtonHandler() {
+        hitButton.addActionListener(new ActionListener() {
+            @Override // gameplay hit button handler
+            public void actionPerformed(ActionEvent e) {
+                listOfGamblers.getGamblers(playersTurn).hitCard();
+                displayCards();
+                if (listOfGamblers.getGamblers(playersTurn).isStand()
+                        || listOfGamblers.getGamblers(playersTurn).handValueHard() > 21
+                        || listOfGamblers.getGamblers(playersTurn).handValueSoft() == 21) {
+                    listOfGamblers.getGamblers(playersTurn).setStand();
+                    playersTurn++;
+                    if (checkIfDealerTurn()) {
+                        dealersTurn();
+                        endGame();
+                    }
+                    whichPlayersTurnLabel.setText("Players " + listOfGamblers.getGamblers(playersTurn).getGamblerID()
+                            + "'s turn");
+                }
+            }
+        });
+    }
+
+    private void doubleButtonHandler() {
+        doubleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listOfGamblers.getGamblers(playersTurn).gamblerDouble();
+                displayCards();
+                if (listOfGamblers.getGamblers(playersTurn).isStand()
+                        || listOfGamblers.getGamblers(playersTurn).handValueHard() > 21
+                        || listOfGamblers.getGamblers(playersTurn).handValueSoft() == 21) {
+                    listOfGamblers.getGamblers(playersTurn).setStand();
+                    playersTurn++;
+                    whichPlayersTurnLabel.setText("Players " + listOfGamblers.getGamblers(playersTurn).getGamblerID()
+                            + "'s turn");
+                    if (checkIfDealerTurn()) {
+                        dealersTurn();
+                        endGame();
+                    }
+                }
+            }
+        });
+    }
+
+    private void standButtonHandler() {
+        standButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listOfGamblers.getGamblers(playersTurn).setStand();
+                displayCards();
+                playersTurn++;
+                whichPlayersTurnLabel.setText("Players " + listOfGamblers.getGamblers(playersTurn).getGamblerID()
+                        + "'s turn");
+                if (checkIfDealerTurn()) {
+                    dealersTurn();
+                    endGame();
+                }
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void moveToAddBalance() {
+        guiCardLayout.removeAll();
+        guiCardLayout.add(addBalanceJPanel);
+        guiCardLayout.repaint();
+        guiCardLayout.revalidate();
+    }
+
+    public void moveToAddPlayer() {
+        guiCardLayout.removeAll();
+        guiCardLayout.add(addPlayerJPanel);
+        guiCardLayout.repaint();
+        guiCardLayout.revalidate();
+    }
+
+    public void moveToScoreboard() {
+        guiCardLayout.removeAll();
+        guiCardLayout.add(scoreboardJPanel);
+        guiCardLayout.repaint();
+        guiCardLayout.revalidate();
+    }
+
+    public void moveToMainMenu() {
+        guiCardLayout.removeAll();
+        guiCardLayout.add(gameMenuCardLayout);
+        guiCardLayout.repaint();
+        guiCardLayout.revalidate();
+    }
+
+    public void moveToPlay() {
+        guiCardLayout.removeAll();
+        guiCardLayout.add(gameplayJPanel);
+        guiCardLayout.repaint();
+        guiCardLayout.revalidate();
+    }
+
     // MODIFIES: This, ListOfGamblers
     // EFFECTS: Creates new labels for each gambler's stats and puts them onto the JFrame for display
-    private void addGamblerData() {
+    public void addGamblerData() {
         scoreboardPlayerJPanel.setLayout(new BoxLayout(scoreboardPlayerJPanel, BoxLayout.Y_AXIS));
         scoreboardWinsJPanel.setLayout(new BoxLayout(scoreboardWinsJPanel, BoxLayout.Y_AXIS));
         scoreboardLossesJPanel.setLayout(new BoxLayout(scoreboardLossesJPanel, BoxLayout.Y_AXIS));
@@ -290,7 +477,7 @@ public class BlackjackGUI extends JPanel {
     }
 
     // EFFECTS: saves the gambler data to file
-    private void saveGameData() {
+    public void saveGameData() {
         try {
             jsonWriter.open();
             jsonWriter.write(listOfGamblers);
@@ -303,7 +490,7 @@ public class BlackjackGUI extends JPanel {
 
     // MODIFIES: this
     // EFFECTS: loads gambler data from file
-    private void loadGameData() {
+    public void loadGameData() {
         try {
             listOfGamblers = jsonReader.read();
         } catch (IOException e) {
@@ -323,13 +510,18 @@ public class BlackjackGUI extends JPanel {
                 for (int i = 0; i < listOfGamblers.getGamblers().size(); i++) {
                     comboBoxValues[i] = Integer.toString(listOfGamblers.getGamblers(i).getGamblerID());
                 }
-                guiCardLayout.removeAll();
-                guiCardLayout.add(addBalanceJPanel);
-                guiCardLayout.repaint();
-                guiCardLayout.revalidate();
+                moveToAddBalance();
                 addBalanceSelectPlayerComboBox.setModel(new DefaultComboBoxModel<>(comboBoxValues));
             }
         }
+    }
+
+    public void resetCardPanels() {
+        dealersCardsJPanel.removeAll();
+        topLeftPlayersCardsJPanel.removeAll();
+        bottomLeftPlayersCardsJPanel.removeAll();
+        topRightPlayersCardsJPanel.removeAll();
+        bottomRightPlayersCardsJPanel.removeAll();
     }
 
     @SuppressWarnings("methodlength")
@@ -337,7 +529,9 @@ public class BlackjackGUI extends JPanel {
     // EFFECTS: displays each player and dealers cards by creating new JLabels for each of them and
     // adding them to the correct panel location and updates the players total hand total
     public void displayCards() {
+        resetCardPanels();
         int count = 0;
+        dealerCardTotalLabel.setText(getHandValueDealer(dealer));
         for (Cards card: dealer.getHand()) {
             if (card.getFacingUp()) {
                 String cardName = card.getCardName();
@@ -355,17 +549,41 @@ public class BlackjackGUI extends JPanel {
                 String suit = card.getSuit();
                 JLabel temp = new JLabel(cardName + "  " + suit, frontCard, JLabel.CENTER);
                 temp.setHorizontalTextPosition(JLabel.CENTER);
-                if (count == 0) {
-                    topLeftPlayersCardsJPanel.add(temp);
-                } else if (count == 1) {
-                    bottomLeftPlayersCardsJPanel.add(temp);
-                } else if (count == 2) {
-                    topRightPlayersCardsJPanel.add(temp);
-                } else {
-                    bottomRightPlayersCardsJPanel.add(temp);
-                }
+                placeCardsInCorrectPanel(count, temp, getHandValueGambler(gambler));
             }
             count++;
+        }
+    }
+
+    public void placeCardsInCorrectPanel(int count, JLabel temp, String handValue) {
+        if (count == 0) {
+            topLeftPlayersCardsJPanel.add(temp);
+            topLeftPlayersCardTotalLabel.setText(handValue);
+        } else if (count == 1) {
+            bottomLeftPlayersCardsJPanel.add(temp);
+            bottomLeftPlayersCardTotalLabel.setText(handValue);
+        } else if (count == 2) {
+            topRightPlayersCardsJPanel.add(temp);
+            topRightPlayersCardTotalLabel.setText(handValue);
+        } else {
+            bottomRightPlayersCardsJPanel.add(temp);
+            bottomRightPlayersCardTotalLabel.setText(handValue);
+        }
+    }
+
+    public String getHandValueGambler(Gambler gambler) {
+        if (gambler.checkAceInHand() && gambler.handValueHard() < 12) {
+            return gambler.handValueHard() + "/" + gambler.handValueSoft();
+        } else {
+            return Integer.toString(gambler.handValueHard());
+        }
+    }
+
+    public String getHandValueDealer(Dealer dealer) {
+        if (dealer.checkAceInHand() && dealer.handValueHard() < 12) {
+            return dealer.handValueHard() + "/" + dealer.handValueSoft();
+        } else {
+            return Integer.toString(dealer.handValueHard());
         }
     }
 
@@ -384,13 +602,15 @@ public class BlackjackGUI extends JPanel {
                 bottomRightPlayersLabel.setText("Player " + gambler.getGamblerID() + "'s Cards:");
             }
             count++;
+            whichPlayersTurnLabel.setText("Players " + listOfGamblers.getGamblers(playersTurn).getGamblerID()
+                    + "'s turn");
         }
     }
 
     // MODIFIES: dealer, player
     // EFFECTS: starts the game of blackjack off by giving the deal 2 cards, 1 face up and another face down, then
     // gives every player 2 cards and displays the current state of the game.
-    public void startGame() {
+    public void preGameSetup() {
         System.out.println("Dealers turn!\n");
         dealer.startingDealerTurn();
         System.out.println("Dealer draws: " + dealer.getDealersCards()  + " Hand total: "
@@ -401,6 +621,58 @@ public class BlackjackGUI extends JPanel {
             listOfGamblers.getGamblers(i).hitCard();
         }
         System.out.println(listOfGamblers.getAllGamblersCards());
+    }
+
+    private void dealersTurn() {
+        dealer.dealersTurn();
+        displayCards();
+    }
+
+    private void playersTurn() {
+        hitButtonHandler();
+        standButtonHandler();
+        doubleButtonHandler();
+    }
+
+    public boolean checkIfDealerTurn() {
+        for (Gambler gambler: listOfGamblers.getGamblers()) {
+            if (!gambler.isStand()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void endGame() {
+        displayCards();
+        payout();
+        playersTurn = 0;
+        // create a timer with a delay of 3 seconds (3000 milliseconds)
+        timer = new Timer(delay, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "Round Finished!", "Finished Round",
+                        JOptionPane.INFORMATION_MESSAGE, image);
+                moveToMainMenu();
+                timer.stop();
+            }
+        });
+        timer.start();
+
+    }
+
+    public void payout() {
+        for (Gambler gambler : listOfGamblers.getGamblers()) {
+            if (gambler.handValueHard() <= 21 && dealer.handValueHard() > 21) {
+                gambler.gamblerWin();
+            } else if (gambler.handValueHard() <= 21 && gambler.handValueHard() > dealer.handValueHard()) {
+                gambler.gamblerWin();
+            } else if (gambler.handValueHard() <= 21 && gambler.handValueHard() == dealer.handValueHard()) {
+                gambler.gamblerPush();
+            } else {
+                gambler.gamblerLoss();
+            }
+        }
     }
 
     //TODO MAKE IT ONLY COLLECT VALID BETS
@@ -425,6 +697,5 @@ public class BlackjackGUI extends JPanel {
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.setVisible(true);
-
     }
 }

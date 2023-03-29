@@ -36,7 +36,9 @@ public class Player {
     public int handValueHard() {
         int handValueHard = 0;
         for (Cards card : hand) {
-            handValueHard += card.getValue();
+            if (card.getFacingUp()) {
+                handValueHard += card.getValue();
+            }
         }
         return handValueHard;
     }
