@@ -104,15 +104,15 @@ public class BlackjackGUI extends JPanel {
     private JButton toggleMusic;
 
 
-    private Dealer dealer;
-    private ListOfGamblers listOfGamblers;
-    private static final String SAVELOCATION = "./data/BlackJackGame.json";
+    private Dealer dealer; // blackjack dealer
+    private ListOfGamblers listOfGamblers; // List of all the gamblers
+    private static final String SAVELOCATION = "./data/BlackJackGame.json"; // save location
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private int delay = 3000; // milliseconds
     private Timer timer;
     private static int playersTurn = 0;
-    private Clip clip;
+    private Clip clip; // music player
 
     private static final int xSize = 1280;
     private static final int ySize = 720;
@@ -121,6 +121,8 @@ public class BlackjackGUI extends JPanel {
     private static final ImageIcon backCard = new ImageIcon("./data/backCard.png");
     private static final String musicLocation = "./data/bangerMusic.wav";
 
+    // MODIFIES: this, gambler, dealer, list of gambler
+    // EFFECTS: starts the gui for blackjack and handles the gui inputs
     public BlackjackGUI() {
         toggleMusic = new JButton("Mute");
         menuBottomRowButtonJPanel.add(toggleMusic);
@@ -149,6 +151,8 @@ public class BlackjackGUI extends JPanel {
         playButtonHandler();
     }
 
+    // MODIFIES: clip, this
+    // EFFECTS: button handler that mutes and unmutes the music, then changes the text to be unmute or muted
     private void toggleMusicHandler() {
         toggleMusic.addActionListener(e -> {
             if (toggleMusic.getText().equals("Mute")) {
@@ -161,6 +165,8 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: clip, audioinputstream
+    // EFFECTS: plays music
     public void playMusic(String musicLocation) {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
@@ -174,6 +180,8 @@ public class BlackjackGUI extends JPanel {
         }
     }
 
+    // MODIFIES: this, dealer, listOfGambler, gambler, jsonWriter, jsonReader
+    // EFFECTS: creates the dealer, listOfGamblers, jsonWriter, jsonReader, and moves the gui to the main menu
     public void welcomeMenuNextButtonHandler() {
         welcomeMenuNextButton.addActionListener(new ActionListener() {
             @Override // welcome screen next button handler
@@ -188,10 +196,13 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this, dealer, listOfGambler
+    // EFFECTS: handles the logic for gameplay, ensures players are valid to start, collects each players bets,
+    // moves to the gameplay screen, sets up the scene, gives the dealer and players 2 cards, displays the cards,
+    // and gives the inputs to the players
     public void playButtonHandler() {
         playButton.addActionListener(new ActionListener() {
-            @Override   // button handler to move from menu to playing, collects players bets, ensures every player
-                        // is valid to start, and does the pregame setup for cards
+            @Override
             public void actionPerformed(ActionEvent e) {
                 playersValidToStart();
                 collectBets();
@@ -205,9 +216,11 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this, gambler
+    // EFFECTS: button handler to move from addBalance to menu, adds balance to gambler, and resets text box
     public void addBalanceConfirmButtonHandler() {
         addBalanceConfirmButton.addActionListener(new ActionListener() {
-            @Override // button handler to move from addBalance to menu, adds balance, and resets text box
+            @Override
             public void actionPerformed(ActionEvent e) {
                 listOfGamblers.getGamblers(
                         addBalanceSelectPlayerComboBox.getSelectedIndex()).addBalance(
@@ -218,9 +231,11 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: key handler to make sure that addBalance field is only numbers
     public void addBalanceTextFieldKeyHandler() {
         addBalanceTextField.addKeyListener(new KeyAdapter() {
-            @Override // key handler to make sure that addBalance field is only numbers
+            @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
                 char c = e.getKeyChar();
@@ -231,9 +246,11 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: button handler to move from menu to addBalance menu and sets the ComboBox and text
     public void addBalanceButtonHandler() {
         addBalanceButton.addActionListener(new ActionListener() {
-            @Override  // button handler to move from menu to addBalance menu and sets the ComboBox and text
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addBalanceSelectPlayerLabel.setText("Select Players 1 - " + listOfGamblers.getGamblers().size());
                 String[] comboBoxValues = new String[listOfGamblers.getGamblers().size()];
@@ -246,9 +263,11 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: button handler to move from addPlayer menu to menu and adds newly created player
     public void addPlayerConfirmButtonHandler() {
         addPlayerConfirmButton.addActionListener(new ActionListener() {
-            @Override // button handler to move from addPlayer menu to menu and adds newly created player
+            @Override
             public void actionPerformed(ActionEvent e) {
                 listOfGamblers.getGamblers().add(
                         new Gambler(Integer.parseInt(startingBalanceAddPlayerJPanel.getText())));
@@ -258,9 +277,11 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: button handler to move from menu to addPlayer menu only if players < 4
     public void addPlayerButtonHandler() {
         addPlayerButton.addActionListener(new ActionListener() {
-            @Override // button handler to move from menu to addPlayer menu only if players < 4
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (listOfGamblers.getGamblers().size() >= 4) {
                     JOptionPane.showMessageDialog(null, "Already 4 players, cannot add more",
@@ -272,9 +293,11 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: key handler to ensure only numbers are entered in addPlayer starting balance
     public void startingBalanceAddPlayerKeyHandler() {
         startingBalanceAddPlayerJPanel.addKeyListener(new KeyAdapter() {
-            @Override // key handler to ensure only numbers are entered in addPlayer starting balance
+            @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
                 char c = e.getKeyChar();
@@ -285,18 +308,22 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS:  button handler to go from scoreboard back to menu
     public void scoreboardBackToMenuButtonHandler() {
         scoreboardBackToMenuButton.addActionListener(new ActionListener() {
-            @Override // button handler to go from scoreboard back to menu
+            @Override
             public void actionPerformed(ActionEvent e) {
                 moveToMainMenu();
             }
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: button handler to move from menu to scoreboard
     public void viewScoreboardButtonHandler() {
         viewScoreboardButton.addActionListener(new ActionListener() {
-            @Override  // button handler to move from menu to scoreboard
+            @Override
             public void actionPerformed(ActionEvent e) {
                 moveToScoreboard();
                 addGamblerData();
@@ -304,9 +331,11 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this, listOfGambler
+    // EFFECTS: loads game data and displays message
     public void loadGameButtonHandler() {
         loadSGameButton.addActionListener(new ActionListener() {
-            @Override  // loads game data and displays message
+            @Override
             public void actionPerformed(ActionEvent e) {
                 loadGameData();
                 JOptionPane.showMessageDialog(null, "Loaded game data from " + SAVELOCATION,
@@ -315,9 +344,10 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // EFFECTS: saves game data and displays message
     public void saveGameButtonHandler() {
         saveGameButton.addActionListener(new ActionListener() {
-            @Override // saves game data and displays message
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveGameData();
                 JOptionPane.showMessageDialog(null, "Saved game data to " + SAVELOCATION,
@@ -326,9 +356,11 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: key handler for welcome screen to insure only numbers entered
     public void welcomeMenuStartingMoneyTextFieldKeyHandler() {
         startingMoneyTextField.addKeyListener(new KeyAdapter() {
-            @Override // key handler for welcome screen to insure only numbers entered
+            @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
                 char c = e.getKeyChar();
@@ -339,6 +371,10 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this, gambler
+    // EFFECTS: button handler, gives the player who hit it a card, and checks if they busted or not, if they busted
+    // moves the turn to the next player, and if this was the last player to bus it moves to the dealers turn and ends
+    // the game. Also sets the label for whos turn it is
     private void hitButtonHandler() {
         hitButton.addActionListener(new ActionListener() {
             @Override // gameplay hit button handler
@@ -361,6 +397,11 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this, gambler
+    // EFFECTS: button handler, gives the player who hit it a card, doubles the players bet
+    // and checks if they busted or not, if they busted, moves the turn to the next player,
+    // and if this was the last player to bus it moves to the dealers turn and ends the game.
+    // Also sets the label for whos turn it is
     private void doubleButtonHandler() {
         doubleButton.addActionListener(new ActionListener() {
             @Override
@@ -383,6 +424,9 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
+    // MODIFIES: this, gambler
+    // EFFECTS: button handler that sets the current gambler to stand and moves the player to the next turn,
+    // also checks if its the dealers turn and if it is does the dealers turn and ends the game
     private void standButtonHandler() {
         standButton.addActionListener(new ActionListener() {
             @Override
@@ -400,20 +444,8 @@ public class BlackjackGUI extends JPanel {
         });
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // MODIFIES: this
+    // EFFECTS: moves to add balance screen
     public void moveToAddBalance() {
         guiCardLayout.removeAll();
         guiCardLayout.add(addBalanceJPanel);
@@ -421,6 +453,8 @@ public class BlackjackGUI extends JPanel {
         guiCardLayout.revalidate();
     }
 
+    // MODIFIES: this
+    // EFFECTS: moves to add player screen
     public void moveToAddPlayer() {
         guiCardLayout.removeAll();
         guiCardLayout.add(addPlayerJPanel);
@@ -428,6 +462,8 @@ public class BlackjackGUI extends JPanel {
         guiCardLayout.revalidate();
     }
 
+    // MODIFIES: this
+    // EFFECTS: moves to scoreboard screen
     public void moveToScoreboard() {
         guiCardLayout.removeAll();
         guiCardLayout.add(scoreboardJPanel);
@@ -435,6 +471,8 @@ public class BlackjackGUI extends JPanel {
         guiCardLayout.revalidate();
     }
 
+    // MODIFIES: this
+    // EFFECTS: moves to main menu
     public void moveToMainMenu() {
         guiCardLayout.removeAll();
         guiCardLayout.add(gameMenuCardLayout);
@@ -442,6 +480,8 @@ public class BlackjackGUI extends JPanel {
         guiCardLayout.revalidate();
     }
 
+    // MODIFIES: this
+    // EFFECTS: moves to play screen
     public void moveToPlay() {
         guiCardLayout.removeAll();
         guiCardLayout.add(gameplayJPanel);
@@ -516,6 +556,8 @@ public class BlackjackGUI extends JPanel {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes all the displayed cards
     public void resetCardPanels() {
         dealersCardsJPanel.removeAll();
         topLeftPlayersCardsJPanel.removeAll();
@@ -555,6 +597,8 @@ public class BlackjackGUI extends JPanel {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: places the objects at the correct location
     public void placeCardsInCorrectPanel(int count, JLabel temp, String handValue) {
         if (count == 0) {
             topLeftPlayersCardsJPanel.add(temp);
@@ -571,6 +615,8 @@ public class BlackjackGUI extends JPanel {
         }
     }
 
+
+    // EFFECTS: returns a string of the gamblers hand value
     public String getHandValueGambler(Gambler gambler) {
         if (gambler.checkAceInHand() && gambler.handValueHard() < 12) {
             return gambler.handValueHard() + "/" + gambler.handValueSoft();
@@ -579,6 +625,7 @@ public class BlackjackGUI extends JPanel {
         }
     }
 
+    // EFFECTS: returns a string of the dealers hand value
     public String getHandValueDealer(Dealer dealer) {
         if (dealer.checkAceInHand() && dealer.handValueHard() < 12) {
             return dealer.handValueHard() + "/" + dealer.handValueSoft();
@@ -623,17 +670,22 @@ public class BlackjackGUI extends JPanel {
         System.out.println(listOfGamblers.getAllGamblersCards());
     }
 
+    // MODIFIES: this, dealer
+    // EFFECTS: does the dealers turn and displays the cards
     private void dealersTurn() {
         dealer.dealersTurn();
         displayCards();
     }
 
+    // MODIFIES: this, gambler
+    // EFFECTS: handles the players turn and gives them option to hit stand or double
     private void playersTurn() {
         hitButtonHandler();
         standButtonHandler();
         doubleButtonHandler();
     }
 
+    // EFFECTS: checks if its the dealers turn
     public boolean checkIfDealerTurn() {
         for (Gambler gambler: listOfGamblers.getGamblers()) {
             if (!gambler.isStand()) {
@@ -643,6 +695,9 @@ public class BlackjackGUI extends JPanel {
         return true;
     }
 
+    // MODIFIES: this, listOfGambler, gambler, dealer
+    // EFFECTS: displays cards, pays out players who won, sets the plays turn to 0, starts a timer that ends the game
+    // in 3 seconds and displays a message that the game ended
     public void endGame() {
         displayCards();
         payout();
@@ -661,6 +716,8 @@ public class BlackjackGUI extends JPanel {
 
     }
 
+    // MODIFIES: gambler
+    // EFFECTS: gives plays their bet * 2 back to balance depending if they won or lost
     public void payout() {
         for (Gambler gambler : listOfGamblers.getGamblers()) {
             if (gambler.handValueHard() <= 21 && dealer.handValueHard() > 21) {
@@ -675,10 +732,11 @@ public class BlackjackGUI extends JPanel {
         }
     }
 
-    //TODO MAKE IT ONLY COLLECT VALID BETS
+
+
     // MODIFIES: gambler, listOfGambler
     // EFFECTS: collects bets from all gamblers and sets their bets
-    public void collectBets() {
+    public void collectBets() { //TODO MAKE IT ONLY COLLECT VALID BETS
         for (Gambler gambler: listOfGamblers.getGamblers()) {
             int bet = Integer.parseInt(JOptionPane.showInputDialog("Player" + gambler.getGamblerID()
                     + "How much would you like to bet?"));
@@ -688,7 +746,6 @@ public class BlackjackGUI extends JPanel {
 
     // EFFECTS: starts the program
     public static void main(String[] args) {
-
         JFrame frame = new JFrame("BlackjackGUI");
         frame.setContentPane(new BlackjackGUI().guiCardLayout);
         frame.setIconImage(image.getImage());
