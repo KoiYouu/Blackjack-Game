@@ -434,12 +434,12 @@ public class BlackjackGUI extends JPanel {
                 listOfGamblers.getGamblers(playersTurn).setStand();
                 displayCards();
                 playersTurn++;
-                whichPlayersTurnLabel.setText("Players " + listOfGamblers.getGamblers(playersTurn).getGamblerID()
-                        + "'s turn");
                 if (checkIfDealerTurn()) {
                     dealersTurn();
                     endGame();
                 }
+                whichPlayersTurnLabel.setText("Players " + listOfGamblers.getGamblers(playersTurn).getGamblerID()
+                        + "'s turn");
             }
         });
     }
@@ -566,7 +566,6 @@ public class BlackjackGUI extends JPanel {
         bottomRightPlayersCardsJPanel.removeAll();
     }
 
-    @SuppressWarnings("methodlength")
     // MODIFIES: this
     // EFFECTS: displays each player and dealers cards by creating new JLabels for each of them and
     // adding them to the correct panel location and updates the players total hand total
@@ -575,25 +574,37 @@ public class BlackjackGUI extends JPanel {
         int count = 0;
         dealerCardTotalLabel.setText(getHandValueDealer(dealer));
         for (Cards card: dealer.getHand()) {
-            if (card.getFacingUp()) {
-                String cardName = card.getCardName();
-                String suit = card.getSuit();
-                JLabel temp = new JLabel(cardName + "  " + suit, frontCard, JLabel.CENTER);
-                temp.setHorizontalTextPosition(JLabel.CENTER);
-                dealersCardsJPanel.add(temp);
-            } else {
-                dealersCardsJPanel.add(new JLabel(backCard, JLabel.CENTER));
-            }
+            displayDealerCards(card);
         }
         for (Gambler gambler: listOfGamblers.getGamblers()) {
-            for (Cards card: gambler.getHand()) {
-                String cardName = card.getCardName();
-                String suit = card.getSuit();
-                JLabel temp = new JLabel(cardName + "  " + suit, frontCard, JLabel.CENTER);
-                temp.setHorizontalTextPosition(JLabel.CENTER);
-                placeCardsInCorrectPanel(count, temp, getHandValueGambler(gambler));
-            }
+            displayGamblerCards(count, gambler);
             count++;
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: displays the dealers cards in the correct spot with the correct card back
+    private void displayDealerCards(Cards card) {
+        if (card.getFacingUp()) {
+            String cardName = card.getCardName();
+            String suit = card.getSuit();
+            JLabel temp = new JLabel(cardName + "  " + suit, frontCard, JLabel.CENTER);
+            temp.setHorizontalTextPosition(JLabel.CENTER);
+            dealersCardsJPanel.add(temp);
+        } else {
+            dealersCardsJPanel.add(new JLabel(backCard, JLabel.CENTER));
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: displays the cards of the gambler in the correct spot
+    private void displayGamblerCards(int count, Gambler gambler) {
+        for (Cards card: gambler.getHand()) {
+            String cardName = card.getCardName();
+            String suit = card.getSuit();
+            JLabel temp = new JLabel(cardName + "  " + suit, frontCard, JLabel.CENTER);
+            temp.setHorizontalTextPosition(JLabel.CENTER);
+            placeCardsInCorrectPanel(count, temp, getHandValueGambler(gambler));
         }
     }
 
@@ -697,10 +708,11 @@ public class BlackjackGUI extends JPanel {
 
     // MODIFIES: this, listOfGambler, gambler, dealer
     // EFFECTS: displays cards, pays out players who won, sets the plays turn to 0, starts a timer that ends the game
-    // in 3 seconds and displays a message that the game ended
+    // in 3 seconds and displays a message that the game ended, and clears dealers hand
     public void endGame() {
         displayCards();
         payout();
+        dealer.clearHand();
         playersTurn = 0;
         // create a timer with a delay of 3 seconds (3000 milliseconds)
         timer = new Timer(delay, new ActionListener() {

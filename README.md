@@ -75,3 +75,16 @@ or start a game new.
 A large part of the saving and loading of game data to and from a json file was adapted from
 the CPSC 210 team, big thank you to them. This includes the tests and some methods. 
 You can find their code here at https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+## Instruction For Grader
+
+- You can generate the first required action related to adding a Gambler to a ListOfGamblers by 
+clicking the Add Player button on the main menu and following the instructions then clicking confirm
+- You can generate the second required action related to adding Cards to a Gambler by hitting the Hit
+button on the play screen. To reach the play screen hit Play on the main menu
+
+- You can locate my visual component by saving, loading, or playing the game
+
+- You can save the state of my application by clicking the save button on the main menu
+
+- You can reload the state of my application by clicking the load save button on the main menu
