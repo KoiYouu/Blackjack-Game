@@ -23,8 +23,8 @@ public class ListOfGamblersTest {
 
     @Test
     void testGetPlayers() {
-        assertEquals(53, gamblers.getGamblers(0).getGamblerID());
-        assertEquals(54, gamblers.getGamblers(1).getGamblerID());
+        assertEquals(55, gamblers.getGamblers(0).getGamblerID());
+        assertEquals(56, gamblers.getGamblers(1).getGamblerID());
     }
 
     @Test

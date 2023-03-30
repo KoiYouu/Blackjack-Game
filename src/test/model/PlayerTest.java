@@ -91,6 +91,18 @@ public abstract class PlayerTest {
         int totalValue = Cards.getValues(5) + Cards.getValues(12) + Cards.getValues(6);
         assertEquals(totalValue, player.handValueHard());
         assertEquals(totalValue, player.handValueSoft());
+    }
 
+    @Test
+    void testHandValueHardWithFaceDownCard() {
+        player.hitCard();
+        player.hitCard();
+        player.hitCard();
+        player.hand.get(0).setSpecificCard(5);
+        player.hand.get(1).setSpecificCard(12);
+        player.hand.get(2).setSpecificCard(6);
+        player.hand.get(2).setCardFaceDown();
+        int totalValue = Cards.getValues(5) + Cards.getValues(12);
+        assertEquals(totalValue, player.handValueHard());
     }
 }
