@@ -90,109 +90,186 @@ button on the play screen. To reach the play screen hit Play on the main menu
 - You can reload the state of my application by clicking the load save button on the main menu
 
 ## Phase 4: Task 2
-Wed Apr 12 17:46:38 PDT 2023
-Created 2 Gamblers with $12213 and added to ListOfGamblers
+Created 3 Gamblers with $1000 and added to ListOfGamblers
 
 
-Wed Apr 12 17:46:40 PDT 2023
-Set Gambler 1 to 1
+Wed Apr 12 18:26:53 PDT 2023
+Set Gambler 1's bet to 100
 
 
-Wed Apr 12 17:46:40 PDT 2023
-Removed 1 from Gambler 1's balance
+Wed Apr 12 18:26:53 PDT 2023
+Removed 100 from Gambler 1's balance
 
 
-Wed Apr 12 17:46:41 PDT 2023
-Set Gambler 2 to 1
+Wed Apr 12 18:26:54 PDT 2023
+Set Gambler 2's bet to 500
 
 
-Wed Apr 12 17:46:41 PDT 2023
-Removed 1 from Gambler 2's balance
+Wed Apr 12 18:26:54 PDT 2023
+Removed 500 from Gambler 2's balance
 
 
-Wed Apr 12 17:46:41 PDT 2023
+Wed Apr 12 18:26:57 PDT 2023
+Set Gambler 3's bet to 69
+
+
+Wed Apr 12 18:26:57 PDT 2023
+Removed 69 from Gambler 3's balance
+
+
+Wed Apr 12 18:26:57 PDT 2023
 Added Card to Dealer
 
 
-Wed Apr 12 17:46:41 PDT 2023
+Wed Apr 12 18:26:57 PDT 2023
 Added Card to Dealer
 
 
-Wed Apr 12 17:46:41 PDT 2023
+Wed Apr 12 18:26:57 PDT 2023
 Set 2nd Dealer Card to face down
 
 
-Wed Apr 12 17:46:41 PDT 2023
+Wed Apr 12 18:26:57 PDT 2023
 Added card to Gambler 1
 
 
-Wed Apr 12 17:46:41 PDT 2023
+Wed Apr 12 18:26:57 PDT 2023
 Added card to Gambler 1
 
 
-Wed Apr 12 17:46:41 PDT 2023
+Wed Apr 12 18:26:57 PDT 2023
 Added card to Gambler 2
 
 
-Wed Apr 12 17:46:41 PDT 2023
+Wed Apr 12 18:26:57 PDT 2023
 Added card to Gambler 2
 
 
-Wed Apr 12 17:46:42 PDT 2023
+Wed Apr 12 18:26:57 PDT 2023
+Added card to Gambler 3
+
+
+Wed Apr 12 18:26:57 PDT 2023
+Added card to Gambler 3
+
+
+Wed Apr 12 18:26:59 PDT 2023
 Added card to Gambler 1
 
 
-Wed Apr 12 17:46:43 PDT 2023
-Added card to Gambler 1
-
-
-Wed Apr 12 17:46:44 PDT 2023
-Added card to Gambler 1
-
-
-Wed Apr 12 17:46:45 PDT 2023
+Wed Apr 12 18:27:02 PDT 2023
 Added card to Gambler 2
 
 
-Wed Apr 12 17:46:45 PDT 2023
-Added card to Gambler 2
+Wed Apr 12 18:27:05 PDT 2023
+Set Gambler 3's bet to 138
 
 
-Wed Apr 12 17:46:45 PDT 2023
+Wed Apr 12 18:27:05 PDT 2023
+Removed 138 from Gambler 3's balance
+
+
+Wed Apr 12 18:27:05 PDT 2023
+Set Gambler 3's bet to 138
+
+
+Wed Apr 12 18:27:05 PDT 2023
+Removed 276 from Gambler 3's balance
+
+
+Wed Apr 12 18:27:05 PDT 2023
+Added card to Gambler 3
+
+
+Wed Apr 12 18:27:06 PDT 2023
+Set Gambler 3's bet to 276
+
+
+Wed Apr 12 18:27:06 PDT 2023
+Removed 276 from Gambler 3's balance
+
+
+Wed Apr 12 18:27:06 PDT 2023
+Set Gambler 3's bet to 276
+
+
+Wed Apr 12 18:27:06 PDT 2023
+Removed 552 from Gambler 3's balance
+
+
+Wed Apr 12 18:27:06 PDT 2023
+Added card to Gambler 3
+
+
+Wed Apr 12 18:27:08 PDT 2023
+Added Card to Dealer
+
+
+Wed Apr 12 18:27:08 PDT 2023
 Set Dealer to Stand
 
 
-Wed Apr 12 17:46:45 PDT 2023
+Wed Apr 12 18:27:08 PDT 2023
+Added 200 to Gambler 1's balance
+
+
+Wed Apr 12 18:27:08 PDT 2023
 Set Gambler 1 to have 0 bet
 
 
-Wed Apr 12 17:46:45 PDT 2023
-Added Loss to Gambler 1
+Wed Apr 12 18:27:08 PDT 2023
+Added Win to Gambler 1
 
 
-Wed Apr 12 17:46:45 PDT 2023
+Wed Apr 12 18:27:08 PDT 2023
 Set Gambler 1's hand to be empty
 
 
-Wed Apr 12 17:46:45 PDT 2023
+Wed Apr 12 18:27:08 PDT 2023
 Set Gambler 1 to be not stand
 
 
-Wed Apr 12 17:46:45 PDT 2023
+Wed Apr 12 18:27:08 PDT 2023
+Added 1000 to Gambler 2's balance
+
+
+Wed Apr 12 18:27:08 PDT 2023
 Set Gambler 2 to have 0 bet
 
 
-Wed Apr 12 17:46:45 PDT 2023
-Added Loss to Gambler 2
+Wed Apr 12 18:27:08 PDT 2023
+Added Win to Gambler 2
 
 
-Wed Apr 12 17:46:45 PDT 2023
+Wed Apr 12 18:27:08 PDT 2023
 Set Gambler 2's hand to be empty
 
 
-Wed Apr 12 17:46:45 PDT 2023
+Wed Apr 12 18:27:08 PDT 2023
 Set Gambler 2 to be not stand
 
 
-Wed Apr 12 17:46:45 PDT 2023
+Wed Apr 12 18:27:08 PDT 2023
+Added 552 to Gambler 3's balance
+
+
+Wed Apr 12 18:27:08 PDT 2023
+Set Gambler 3 to have 0 bet
+
+
+Wed Apr 12 18:27:08 PDT 2023
+Added Win to Gambler 3
+
+
+Wed Apr 12 18:27:08 PDT 2023
+Set Gambler 3's hand to be empty
+
+
+Wed Apr 12 18:27:08 PDT 2023
+Set Gambler 3 to be not stand
+
+
+Wed Apr 12 18:27:08 PDT 2023
 Cleared hand of dealer
+
+

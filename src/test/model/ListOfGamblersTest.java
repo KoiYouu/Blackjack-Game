@@ -23,8 +23,18 @@ public class ListOfGamblersTest {
 
     @Test
     void testGetPlayers() {
-        assertEquals(47, gamblers.getGamblers(0).getGamblerID());
-        assertEquals(48, gamblers.getGamblers(1).getGamblerID());
+        assertEquals(55, gamblers.getGamblers(0).getGamblerID());
+        assertEquals(56, gamblers.getGamblers(1).getGamblerID());
+    }
+
+    @Test
+    void testAddGambler() {
+        assertEquals(2, gamblers.getGamblers().size());
+        assertEquals(1000, gamblers.getGamblers(0).getBalance());
+        assertEquals(1000, gamblers.getGamblers(1).getBalance());
+        gamblers.addGambler(new Gambler(69));
+        assertEquals(3, gamblers.getGamblers().size());
+        assertEquals(69, gamblers.getGamblers(2).getBalance());
     }
 
     @Test

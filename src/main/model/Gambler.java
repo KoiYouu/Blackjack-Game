@@ -99,7 +99,7 @@ public class Gambler extends Player {
     // EFFECTS: Sets the gamblers bet to the given value and takes away the bet from balance
     public void setBet(int bet) {
         this.bet = bet;
-        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + " to " + this.bet));
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + "'s bet to " + this.bet));
         this.balance -= bet;
         EventLog.getInstance().logEvent(new Event("Removed " + bet + " from Gambler " + this.gamblerID
                 + "'s balance"));
