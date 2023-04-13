@@ -55,6 +55,7 @@ public class Player {
     // EFFECTS: clears hand of all cards
     public void clearHand() {
         hand.clear();
+        EventLog.getInstance().logEvent(new Event("Cleared hand of dealer"));
     }
 
     // REQUIRES index to be >=0 and < hand.size()

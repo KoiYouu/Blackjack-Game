@@ -67,7 +67,21 @@ public class Gambler extends Player {
     public void gamblerDouble() {
         addBalance(bet);
         setBet(this.bet * 2);
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + "'s bet to "
+                + this.bet));
+        EventLog.getInstance().logEvent(new Event("Removed " + this.bet * 2 + " from Gambler "
+                + this.gamblerID + "'s balance"));
         this.hitCard();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds a new random card to our hand and returns what card we got
+    @Override
+    public Cards hitCard() {
+        Cards newCard = new Cards();
+        hand.add(newCard);
+        EventLog.getInstance().logEvent(new Event("Added card to Gambler " + this.gamblerID));
+        return newCard;
     }
 
 
@@ -85,7 +99,10 @@ public class Gambler extends Player {
     // EFFECTS: Sets the gamblers bet to the given value and takes away the bet from balance
     public void setBet(int bet) {
         this.bet = bet;
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + " to " + this.bet));
         this.balance -= bet;
+        EventLog.getInstance().logEvent(new Event("Removed " + bet + " from Gambler " + this.gamblerID
+                + "'s balance"));
     }
 
     // MODIFIES: this
@@ -93,10 +110,16 @@ public class Gambler extends Player {
     // and sets them to not stand
     public void gamblerWin() {
         this.balance += this.bet * 2;
+        EventLog.getInstance().logEvent(new Event("Added " + this.bet * 2 + " to Gambler "
+                + this.gamblerID + "'s balance"));
         this.bet = 0;
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + " to have 0 bet"));
         this.addWin();
+        EventLog.getInstance().logEvent(new Event("Added Win to Gambler " + this.gamblerID));
         this.hand.clear();
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + "'s hand to be empty"));
         this.setNotStand();
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + " to be not stand"));
     }
 
     // MODIFIES: this
@@ -104,10 +127,16 @@ public class Gambler extends Player {
     // and sets them to not stand
     public void gamblerPush() {
         this.balance += this.bet;
+        EventLog.getInstance().logEvent(new Event("Added " + this.bet + " to Gambler "
+                + this.gamblerID + "'s balance"));
         this.bet = 0;
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + " to have 0 bet"));
         this.addDraw();
+        EventLog.getInstance().logEvent(new Event("Added Draw to Gambler " + this.gamblerID));
         this.hand.clear();
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + "'s hand to be empty"));
         this.setNotStand();
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + " to be not stand"));
     }
 
     // MODIFIES: this
@@ -115,9 +144,14 @@ public class Gambler extends Player {
     // and sets them to not stand
     public void gamblerLoss() {
         this.bet = 0;
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + " to have 0 bet"));
         this.addLoss();
+        EventLog.getInstance().logEvent(new Event("Added Loss to Gambler " + this.gamblerID));
         this.hand.clear();
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + "'s hand to be empty"));
         this.setNotStand();
+        EventLog.getInstance().logEvent(new Event("Set Gambler " + this.gamblerID + " to be not stand"));
+
     }
 
     public int getGamblerID() {

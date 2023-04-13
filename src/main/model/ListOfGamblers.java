@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 // represents multiple gamblers
 public class ListOfGamblers {
-    private ArrayList<Gambler> gamblers;
+    private final ArrayList<Gambler> gamblers;
 
     // REQUIRES: numGamblers >= 1, startingBalance >= 1
     // EFFECTS: Creates an array of gamblers with the number of gamblers being the given numGamblers
@@ -17,6 +17,8 @@ public class ListOfGamblers {
         for (int i = 0; i < numGamblers; i++) {
             gamblers.add(new Gambler(startingBalance));
         }
+        EventLog.getInstance().logEvent(new Event("Created " + numGamblers + " Gamblers with $"
+                + startingBalance + " and added to ListOfGamblers"));
     }
 
     public ArrayList<Gambler> getGamblers() {
@@ -37,6 +39,13 @@ public class ListOfGamblers {
                     + gambler.getAllCards();
         }
         return allCards;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds a gambler
+    public void addGambler(Gambler gambler) {
+        this.gamblers.add(gambler);
+        EventLog.getInstance().logEvent(new Event("Added gambler to listOfGamblers"));
     }
 
     // EFFECTS: returns this as a Json object

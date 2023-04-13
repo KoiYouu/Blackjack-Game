@@ -13,8 +13,11 @@ public class Dealer extends Player {
     // and sets the 2nd one face down, then returns the cards as a string
     public String startingDealerTurn() {
         hitCard();
+        EventLog.getInstance().logEvent(new Event("Added Card to Dealer"));
         hitCard();
+        EventLog.getInstance().logEvent(new Event("Added Card to Dealer"));
         this.hand.get(1).setCardFaceDown();
+        EventLog.getInstance().logEvent(new Event("Set 2nd Dealer Card to face down"));
         return this.hand.get(0).getCardInfo() + this.hand.get(1).getCardInfo();
     }
 
@@ -25,14 +28,16 @@ public class Dealer extends Player {
         this.hand.get(1).setCardFaceUp();
         while (this.handValueSoft() <= 17) {
             hitCard();
+            EventLog.getInstance().logEvent(new Event("Added Card to Dealer"));
         }
         this.setStand();
+        EventLog.getInstance().logEvent(new Event("Set Dealer to Stand"));
     }
 
     // EFFECT: Returns a string of all the dealers cards
     public String getDealersCards() {
         String dealersCards = "";
-        for (Cards card: this.hand) {
+        for (Cards card : this.hand) {
             dealersCards = dealersCards + " " + card.getCardInfo();
         }
         return dealersCards;

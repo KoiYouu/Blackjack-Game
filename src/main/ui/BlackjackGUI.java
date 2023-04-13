@@ -1,9 +1,7 @@
 package ui;
 
-import model.Cards;
-import model.Dealer;
-import model.Gambler;
-import model.ListOfGamblers;
+import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -151,6 +149,8 @@ public class BlackjackGUI extends JPanel {
         playButtonHandler();
     }
 
+
+
     // MODIFIES: clip, this
     // EFFECTS: button handler that mutes and unmutes the music, then changes the text to be unmute or muted
     private void toggleMusicHandler() {
@@ -204,6 +204,7 @@ public class BlackjackGUI extends JPanel {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setPlayButtonArea();
                 playersValidToStart();
                 collectBets();
                 moveToPlay();
@@ -214,6 +215,16 @@ public class BlackjackGUI extends JPanel {
 
             }
         });
+    }
+
+    // MODIFIES: This
+    // EFFECTS: Sets up the JPanel area with the correct buttons
+    private void setPlayButtonArea() {
+        playSectionJPanel.setLayout(new BoxLayout(playSectionJPanel, BoxLayout.Y_AXIS));
+        playSectionJPanel.removeAll();
+        playSectionJPanel.add(hitButton = new JButton("Hit"));
+        playSectionJPanel.add(doubleButton = new JButton("Double"));
+        playSectionJPanel.add(standButton = new JButton("Stand"));
     }
 
     // MODIFIES: this, gambler
@@ -269,7 +280,7 @@ public class BlackjackGUI extends JPanel {
         addPlayerConfirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listOfGamblers.getGamblers().add(
+                listOfGamblers.addGambler(
                         new Gambler(Integer.parseInt(startingBalanceAddPlayerJPanel.getText())));
                 startingBalanceAddPlayerJPanel.setText("");
                 moveToMainMenu();
@@ -379,6 +390,7 @@ public class BlackjackGUI extends JPanel {
         hitButton.addActionListener(new ActionListener() {
             @Override // gameplay hit button handler
             public void actionPerformed(ActionEvent e) {
+                System.out.println(playersTurn);
                 listOfGamblers.getGamblers(playersTurn).hitCard();
                 displayCards();
                 if (listOfGamblers.getGamblers(playersTurn).isStand()
@@ -759,9 +771,19 @@ public class BlackjackGUI extends JPanel {
     // EFFECTS: starts the program
     public static void main(String[] args) {
         JFrame frame = new JFrame("BlackjackGUI");
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent event) {
+                    for (Event next : EventLog.getInstance()) {
+                        System.out.println(next.toString() + "\n\n");
+                    }
+                frame.dispose();
+                System.exit(0);
+            }
+        });
         frame.setContentPane(new BlackjackGUI().guiCardLayout);
         frame.setIconImage(image.getImage());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(xSize,ySize);
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);

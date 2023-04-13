@@ -8,14 +8,14 @@ public class Cards {
     private int value; // value of the card in a blackjack game
     private String suit; // suit of the card
     private boolean facingUp; // true if card is face up, false if it is face down
-    private int randNum; // random number used to dictate what card to pick
+    private final int randNum; // random number used to dictate what card to pick
 
     // possible cards
-    private static final String[] deck = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+    private static final String[] deck = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
     private static final int[] values = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1}; // value of cards
     private static final String[] suits = {"C", "D", "H", "S"}; // possible suits
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
 
     // EFFECTS: Creates a playing card with a random cardName and its corresponding value, random suit,
@@ -44,7 +44,7 @@ public class Cards {
     public String getCardInfo() {
         if (this.facingUp) {
             return "[Name: " + this.getCardName()
-                     + " Suit: " + this.getSuit() + "]";
+                    + " Suit: " + this.getSuit() + "]";
         } else {
             return "[X]";
         }
