@@ -88,3 +88,111 @@ button on the play screen. To reach the play screen hit Play on the main menu
 - You can save the state of my application by clicking the save button on the main menu
 
 - You can reload the state of my application by clicking the load save button on the main menu
+
+## Phase 4: Task 2
+Wed Apr 12 17:46:38 PDT 2023
+Created 2 Gamblers with $12213 and added to ListOfGamblers
+
+
+Wed Apr 12 17:46:40 PDT 2023
+Set Gambler 1 to 1
+
+
+Wed Apr 12 17:46:40 PDT 2023
+Removed 1 from Gambler 1's balance
+
+
+Wed Apr 12 17:46:41 PDT 2023
+Set Gambler 2 to 1
+
+
+Wed Apr 12 17:46:41 PDT 2023
+Removed 1 from Gambler 2's balance
+
+
+Wed Apr 12 17:46:41 PDT 2023
+Added Card to Dealer
+
+
+Wed Apr 12 17:46:41 PDT 2023
+Added Card to Dealer
+
+
+Wed Apr 12 17:46:41 PDT 2023
+Set 2nd Dealer Card to face down
+
+
+Wed Apr 12 17:46:41 PDT 2023
+Added card to Gambler 1
+
+
+Wed Apr 12 17:46:41 PDT 2023
+Added card to Gambler 1
+
+
+Wed Apr 12 17:46:41 PDT 2023
+Added card to Gambler 2
+
+
+Wed Apr 12 17:46:41 PDT 2023
+Added card to Gambler 2
+
+
+Wed Apr 12 17:46:42 PDT 2023
+Added card to Gambler 1
+
+
+Wed Apr 12 17:46:43 PDT 2023
+Added card to Gambler 1
+
+
+Wed Apr 12 17:46:44 PDT 2023
+Added card to Gambler 1
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Added card to Gambler 2
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Added card to Gambler 2
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Set Dealer to Stand
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Set Gambler 1 to have 0 bet
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Added Loss to Gambler 1
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Set Gambler 1's hand to be empty
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Set Gambler 1 to be not stand
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Set Gambler 2 to have 0 bet
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Added Loss to Gambler 2
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Set Gambler 2's hand to be empty
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Set Gambler 2 to be not stand
+
+
+Wed Apr 12 17:46:45 PDT 2023
+Cleared hand of dealer
