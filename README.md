@@ -272,4 +272,11 @@ Set Gambler 3 to be not stand
 Wed Apr 12 18:27:08 PDT 2023
 Cleared hand of dealer
 
+## Phase 4: Task 3
 
+If I were to refactor my project I would definitely make the game less reliant on the GUI and handle the game logic
+in the model of my project rather than in the ui or GUI. For example when recreating my GUI from scratch I had to 
+create a lot of functions that dealt with the game logic rather than just calling a method that already existed. This 
+would not be a problem if I were to have a class that handled game logic separate from the GUI, and just have the GUI
+exist only as a GUI. Like creating a class called GameLogic and having the GUI only have 1 field of type GameLogic which
+would then make it super easy to deal with what happened when a button was pressed or whatnot.
